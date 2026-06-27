@@ -1,0 +1,7 @@
+/* This file adds the requisite utility classes for Tailwind to work. */
+/* biome-ignore lint/suspicious/noUnknownAtRules: Tailwind directives are required for the configured stylesheet pipeline. */
+@tailwind base;
+/* biome-ignore lint/suspicious/noUnknownAtRules: Tailwind directives are required for the configured stylesheet pipeline. */
+@tailwind components;
+/* biome-ignore lint/suspicious/noUnknownAtRules: Tailwind directives are required for the configured stylesheet pipeline. */
+@tailwind utilities;
