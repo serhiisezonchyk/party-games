@@ -18,6 +18,20 @@ interface PackageSeed {
   label: Labels;
 }
 
+interface CuratedCategorySeed {
+  excludeWordIds?: readonly string[];
+  id: string;
+  includeWordIds?: readonly string[];
+  label: Labels;
+  sourceCategoryId: string;
+}
+
+interface CuratedPackageSeed {
+  categories: readonly CuratedCategorySeed[];
+  id: string;
+  label: Labels;
+}
+
 function createWords(
   categoryId: string,
   words: readonly Labels[]
@@ -42,6 +56,68 @@ function createPackage(seed: PackageSeed): AliasPackage {
     label: { en: seed.label[0], uk: seed.label[1] },
     categories: seed.categories.map(createCategory),
   };
+}
+
+function createCuratedCategory(
+  seed: CuratedCategorySeed,
+  sourceCategoriesById: ReadonlyMap<string, AliasCategory>,
+  sourceWordsById: ReadonlyMap<string, AliasWord>
+): AliasCategory {
+  const sourceCategory = sourceCategoriesById.get(seed.sourceCategoryId);
+
+  if (!sourceCategory) {
+    throw new Error(`Unknown Alias source category: ${seed.sourceCategoryId}`);
+  }
+
+  const excludedWordIds = new Set(seed.excludeWordIds ?? []);
+  const words = sourceCategory.words.filter(
+    (word) => !excludedWordIds.has(word.id)
+  );
+
+  for (const wordId of seed.includeWordIds ?? []) {
+    const word = sourceWordsById.get(wordId);
+
+    if (!word) {
+      throw new Error(`Unknown Alias source word: ${wordId}`);
+    }
+
+    words.push(word);
+  }
+
+  return {
+    id: seed.id,
+    label: { en: seed.label[0], uk: seed.label[1] },
+    words,
+  };
+}
+
+function createCuratedPackages(
+  sourcePackages: readonly AliasPackage[],
+  seeds: readonly CuratedPackageSeed[]
+): AliasPackage[] {
+  const sourceCategories = sourcePackages.flatMap(
+    (contentPackage) => contentPackage.categories
+  );
+  const sourceCategoriesById = new Map(
+    sourceCategories.map((category) => [category.id, category])
+  );
+  const sourceWordsById = new Map(
+    sourceCategories.flatMap((category) =>
+      category.words.map((word) => [word.id, word] as const)
+    )
+  );
+
+  return seeds.map((seed) => ({
+    id: seed.id,
+    label: { en: seed.label[0], uk: seed.label[1] },
+    categories: seed.categories.map((categorySeed) =>
+      createCuratedCategory(
+        categorySeed,
+        sourceCategoriesById,
+        sourceWordsById
+      )
+    ),
+  }));
 }
 
 const packageSeeds: readonly PackageSeed[] = [
@@ -1477,7 +1553,234 @@ const packageSeeds: readonly PackageSeed[] = [
   },
 ];
 
-export const aliasPackages = packageSeeds.map(createPackage);
+const sourceAliasPackages = packageSeeds.map(createPackage);
+
+const curatedPackageSeeds: readonly CuratedPackageSeed[] = [
+  {
+    id: "party",
+    label: ["Quick play", "Швидка гра"],
+    categories: [
+      {
+        id: "party-easy",
+        sourceCategoryId: "party-easy",
+        label: ["Starter words", "Стартові слова"],
+        excludeWordIds: [
+          "party-easy-17",
+          "party-easy-18",
+          "party-easy-33",
+          "party-easy-34",
+          "party-easy-36",
+          "party-easy-37",
+          "party-easy-38",
+          "party-easy-39",
+          "party-easy-40",
+        ],
+      },
+      {
+        id: "party-actions",
+        sourceCategoryId: "party-actions",
+        label: ["Actions and verbs", "Дії та дієслова"],
+      },
+    ],
+  },
+  {
+    id: "world",
+    label: ["Places and nature", "Місця та природа"],
+    categories: [
+      {
+        id: "world-places",
+        sourceCategoryId: "world-places",
+        label: ["Places and buildings", "Місця та будівлі"],
+        includeWordIds: ["party-easy-38", "party-easy-39", "party-easy-40"],
+      },
+      {
+        id: "world-nature",
+        sourceCategoryId: "world-nature",
+        label: ["Nature and weather", "Природа та погода"],
+        excludeWordIds: ["world-nature-27", "world-nature-28"],
+        includeWordIds: ["party-easy-34", "party-easy-36", "party-easy-37"],
+      },
+    ],
+  },
+  {
+    id: "culture",
+    label: ["Culture and Ukraine", "Культура та Україна"],
+    categories: [
+      {
+        id: "culture-media",
+        sourceCategoryId: "culture-media",
+        label: ["Movies, music and media", "Кіно, музика та медіа"],
+      },
+      {
+        id: "culture-ukraine",
+        sourceCategoryId: "culture-ukraine",
+        label: ["Ukraine", "Україна"],
+      },
+    ],
+  },
+  {
+    id: "lifestyle",
+    label: ["Food, home and things", "Їжа, дім і речі"],
+    categories: [
+      {
+        id: "lifestyle-food",
+        sourceCategoryId: "lifestyle-food",
+        label: ["Food and drinks", "Їжа та напої"],
+        includeWordIds: [
+          "party-easy-17",
+          "party-easy-18",
+          "party-easy-33",
+          "world-nature-27",
+          "world-nature-28",
+        ],
+      },
+      {
+        id: "lifestyle-home",
+        sourceCategoryId: "lifestyle-home",
+        label: ["Home and routine", "Дім і побут"],
+      },
+      {
+        id: "challenge-objects",
+        sourceCategoryId: "challenge-objects",
+        label: ["Everyday tools and objects", "Побутові речі та інструменти"],
+      },
+    ],
+  },
+  {
+    id: "modern",
+    label: ["Work, tech and learning", "Робота, технології та навчання"],
+    categories: [
+      {
+        id: "modern-tech",
+        sourceCategoryId: "modern-tech",
+        label: ["Tech and digital life", "Технології та цифрове життя"],
+        excludeWordIds: ["modern-tech-28", "modern-tech-29"],
+        includeWordIds: ["mixed-learning-23"],
+      },
+      {
+        id: "modern-work",
+        sourceCategoryId: "modern-work",
+        label: ["Work and professions", "Робота та професії"],
+      },
+      {
+        id: "mixed-learning",
+        sourceCategoryId: "mixed-learning",
+        label: ["School and learning", "Школа та навчання"],
+        excludeWordIds: [
+          "mixed-learning-14",
+          "mixed-learning-15",
+          "mixed-learning-16",
+          "mixed-learning-17",
+          "mixed-learning-18",
+          "mixed-learning-23",
+          "mixed-learning-69",
+        ],
+      },
+    ],
+  },
+  {
+    id: "active",
+    label: ["Sports and animals", "Спорт і тварини"],
+    categories: [
+      {
+        id: "active-sports",
+        sourceCategoryId: "active-sports",
+        label: ["Sports and hobbies", "Спорт і хобі"],
+      },
+      {
+        id: "challenge-animals",
+        sourceCategoryId: "challenge-animals",
+        label: ["Animals", "Тварини"],
+      },
+    ],
+  },
+  {
+    id: "challenge",
+    label: ["Brain stretch", "Складніші слова"],
+    categories: [
+      {
+        id: "challenge-feelings",
+        sourceCategoryId: "challenge-feelings",
+        label: ["Feelings and personality", "Почуття та характер"],
+      },
+      {
+        id: "challenge-science",
+        sourceCategoryId: "challenge-science",
+        label: ["Science and discovery", "Наука та відкриття"],
+        includeWordIds: [
+          "mixed-learning-14",
+          "mixed-learning-15",
+          "mixed-learning-16",
+          "mixed-learning-17",
+          "mixed-learning-18",
+        ],
+      },
+    ],
+  },
+  {
+    id: "social",
+    label: ["Social and events", "Спілкування та події"],
+    categories: [
+      {
+        id: "social-party",
+        sourceCategoryId: "social-party",
+        label: ["Party stories", "Вечірні історії"],
+        excludeWordIds: [
+          "social-party-37",
+          "social-party-39",
+          "social-party-40",
+          "social-party-41",
+          "social-party-42",
+          "social-party-43",
+          "social-party-44",
+        ],
+        includeWordIds: ["mixed-events-68", "mixed-events-69"],
+      },
+      {
+        id: "social-relationships",
+        sourceCategoryId: "social-relationships",
+        label: ["Relationships", "Стосунки"],
+      },
+      {
+        id: "mixed-events",
+        sourceCategoryId: "mixed-events",
+        label: ["Events and venues", "Події та майданчики"],
+        excludeWordIds: ["mixed-events-68", "mixed-events-69"],
+        includeWordIds: [
+          "social-party-37",
+          "social-party-39",
+          "social-party-40",
+          "social-party-41",
+          "social-party-42",
+          "social-party-43",
+          "social-party-44",
+        ],
+      },
+    ],
+  },
+  {
+    id: "mixed",
+    label: ["City and travel", "Місто та подорожі"],
+    categories: [
+      {
+        id: "mixed-city",
+        sourceCategoryId: "mixed-city",
+        label: ["City details", "Міські деталі"],
+      },
+      {
+        id: "challenge-travel",
+        sourceCategoryId: "challenge-travel",
+        label: ["Travel and transport", "Подорожі та транспорт"],
+        includeWordIds: ["modern-tech-28", "modern-tech-29", "mixed-learning-69"],
+      },
+    ],
+  },
+];
+
+export const aliasPackages = createCuratedPackages(
+  sourceAliasPackages,
+  curatedPackageSeeds
+);
 
 export const aliasCategoryIds = aliasPackages.flatMap((contentPackage) =>
   contentPackage.categories.map((category) => category.id)

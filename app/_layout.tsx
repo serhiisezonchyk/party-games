@@ -3,8 +3,11 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
+import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import "../global.css";
@@ -17,7 +20,23 @@ import {
   usePreferences,
 } from "@/contexts/preferences-context";
 
+preventAutoHideAsync().catch(() => undefined);
+
 export default function RootLayout() {
+  const [fontsLoaded, fontError] = useFonts({
+    Montserrat: require("../assets/fonts/Montserrat.ttf"),
+  });
+
+  useEffect(() => {
+    if (fontsLoaded || fontError) {
+      hideAsync().catch(() => undefined);
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!(fontsLoaded || fontError)) {
+    return null;
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PreferencesProvider>
