@@ -31,6 +31,10 @@ import type {
   Participant,
   SavedCompany,
 } from "@/features/mafia/types";
+import {
+  loadParticipants,
+  saveParticipants,
+} from "@/storage/participants-storage";
 
 export function MafiaSetupScreen() {
   const router = useRouter();
@@ -61,17 +65,18 @@ export function MafiaSetupScreen() {
     let isMounted = true;
 
     Promise.all([loadRecentCompanies(), loadMafiaSettings()])
-      .then(([companies, loadedSettings]) => {
+      .then(async ([companies, loadedSettings]) => {
+        const fallbackParticipants = companies[0]?.participants.length
+          ? companies[0].participants
+          : createDefaultParticipants();
+        const loadedParticipants = await loadParticipants(fallbackParticipants);
+
         if (!isMounted) {
           return;
         }
 
         setRecentCompanies(companies);
-        setParticipants(
-          companies[0]?.participants.length
-            ? companies[0].participants
-            : createDefaultParticipants()
-        );
+        setParticipants(loadedParticipants);
         setSettings(loadedSettings);
         setIsLoaded(true);
       })
@@ -120,6 +125,16 @@ export function MafiaSetupScreen() {
       return;
     }
 
+    saveParticipants(participants).catch((error: unknown) => {
+      console.warn("Failed to save participants", error);
+    });
+  }, [isLoaded, participants]);
+
+  useEffect(() => {
+    if (!isLoaded) {
+      return;
+    }
+
     saveMafiaSettings(settings).catch((error: unknown) => {
       console.warn("Failed to save Mafia settings", error);
     });
@@ -154,9 +169,12 @@ export function MafiaSetupScreen() {
       return;
     }
 
-    const nextCompanies = await saveCurrentCompany(participants);
-    await saveMafiaSettings(settings);
-    await saveActiveMafiaGame(createMafiaActiveGame(participants, settings));
+    const [nextCompanies] = await Promise.all([
+      saveCurrentCompany(participants),
+      saveParticipants(participants),
+      saveMafiaSettings(settings),
+      saveActiveMafiaGame(createMafiaActiveGame(participants, settings)),
+    ]);
     setRecentCompanies(nextCompanies);
     setSaveMessage(t("mafia.start.saved"));
     router.push("/games/mafia/play");

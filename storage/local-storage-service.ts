@@ -2,9 +2,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const storageKeys = {
   preferences: "party-games.preferences.v1",
+  participants: "party-games.participants.current.v1",
   mafiaRecentCompanies: "party-games.mafia.recentCompanies.v1",
   mafiaCurrentSettings: "party-games.mafia.currentSettings.v1",
   mafiaActiveGame: "party-games.mafia.activeGame.v1",
+  spyParticipants: "party-games.spy.participants.v1",
+  spyCurrentSettings: "party-games.spy.currentSettings.v1",
+  spyCustomContent: "party-games.spy.customContent.v1",
+  spyActiveGame: "party-games.spy.activeGame.v1",
 } as const;
 
 export type StorageKey = (typeof storageKeys)[keyof typeof storageKeys];

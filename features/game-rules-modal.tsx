@@ -31,7 +31,20 @@ const gameRuleSections: Record<GameId, RulesSection[]> = {
     },
     { titleKey: "mafia.rules.winTitle", bodyKey: "mafia.rules.winBody" },
   ],
-  spy: [{ titleKey: "game.rules.soonTitle", bodyKey: "game.rules.soonBody" }],
+  spy: [
+    { titleKey: "spy.rules.goalTitle", bodyKey: "spy.rules.goalBody" },
+    { titleKey: "spy.rules.setupTitle", bodyKey: "spy.rules.setupBody" },
+    {
+      titleKey: "spy.rules.questionsTitle",
+      bodyKey: "spy.rules.questionsBody",
+    },
+    {
+      titleKey: "spy.rules.accusationTitle",
+      bodyKey: "spy.rules.accusationBody",
+    },
+    { titleKey: "spy.rules.spyGuessTitle", bodyKey: "spy.rules.spyGuessBody" },
+    { titleKey: "spy.rules.timerTitle", bodyKey: "spy.rules.timerBody" },
+  ],
   alias: [{ titleKey: "game.rules.soonTitle", bodyKey: "game.rules.soonBody" }],
   "truth-or-dare": [
     { titleKey: "game.rules.soonTitle", bodyKey: "game.rules.soonBody" },

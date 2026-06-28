@@ -14,20 +14,16 @@ import type {
   MafiaVariant,
   MafiaWinner,
   Participant,
-  ParticipantGender,
   SavedCompany,
 } from "@/features/mafia/types";
 import {
   localStorageService,
   storageKeys,
 } from "@/storage/local-storage-service";
+import { parseParticipant } from "@/storage/participants-storage";
 import { isRecord } from "@/storage/preferences-storage";
 
 const defaultCompanies: SavedCompany[] = [];
-
-function isParticipantGender(value: unknown): value is ParticipantGender {
-  return value === "male" || value === "female" || value === "nonBinary";
-}
 
 function isMafiaVariant(value: unknown): value is MafiaVariant {
   return value === "classic" || value === "expanded";
@@ -77,22 +73,6 @@ function parseNumber(
   }
 
   return Math.min(max, Math.max(min, Math.round(value)));
-}
-
-function parseParticipant(value: unknown): Participant | null {
-  if (!isRecord(value)) {
-    return null;
-  }
-
-  if (typeof value.id !== "string") {
-    return null;
-  }
-
-  return {
-    id: value.id,
-    name: typeof value.name === "string" ? value.name : "",
-    gender: isParticipantGender(value.gender) ? value.gender : "male",
-  };
 }
 
 function parseStringRecord(value: unknown) {

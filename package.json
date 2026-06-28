@@ -6,6 +6,7 @@
     "@react-navigation/elements": "^2.6.3",
     "@react-navigation/native": "^7.1.8",
     "expo": "~54.0.34",
+    "expo-audio": "~1.1.1",
     "expo-constants": "~18.0.13",
     "expo-font": "~14.0.11",
     "expo-haptics": "~15.0.8",
@@ -50,7 +51,8 @@
     "lint": "expo lint",
     "check": "ultracite check",
     "fix": "ultracite fix",
-    "test:mafia": "node scripts/check-mafia-engine.cjs"
+    "test:mafia": "node scripts/check-mafia-engine.cjs",
+    "test:spy": "node scripts/check-spy-content.cjs"
   },
   "version": "1.0.0",
   "main": "expo-router/entry",

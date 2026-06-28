@@ -10,6 +10,7 @@ import { usePreferences } from "@/contexts/preferences-context";
 import { getGameById } from "@/data/games";
 import { GameRulesModal } from "@/features/game-rules-modal";
 import { MafiaSetupScreen } from "@/features/mafia/mafia-setup-screen";
+import { SpySetupScreen } from "@/features/spy/spy-setup-screen";
 
 export default function GameScreen() {
   const { gameId } = useLocalSearchParams<{ gameId?: string | string[] }>();
@@ -66,6 +67,32 @@ export default function GameScreen() {
           }}
         />
         <MafiaSetupScreen />
+        <GameRulesModal
+          gameId={game.id}
+          onClose={() => setIsRulesVisible(false)}
+          palette={palette}
+          t={t}
+          visible={isRulesVisible}
+        />
+      </>
+    );
+  }
+
+  if (game.id === "spy") {
+    return (
+      <>
+        <Stack.Screen
+          options={{
+            title: t(game.titleKey),
+            headerRight: () => (
+              <View style={styles.headerActions}>
+                <HeaderInfoButton onPress={() => setIsRulesVisible(true)} />
+                <HeaderSettingsButton />
+              </View>
+            ),
+          }}
+        />
+        <SpySetupScreen />
         <GameRulesModal
           gameId={game.id}
           onClose={() => setIsRulesVisible(false)}

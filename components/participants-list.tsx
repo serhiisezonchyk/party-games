@@ -190,6 +190,9 @@ export function ParticipantsList({
         data={participants}
         dragItemOverflow
         keyExtractor={(participant) => participant.id}
+        // The library's nested wrapper measures with findNodeHandle, which
+        // warns on RN 0.81/Fabric. The inner list still measures its own size.
+        onContainerLayout={() => undefined}
         onDragEnd={({ data }) => onChange(data)}
         renderItem={renderItem}
         scrollEnabled={false}
