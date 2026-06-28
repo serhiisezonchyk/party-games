@@ -18,6 +18,8 @@ export const storageKeys = {
   neverHaveIEverCurrentSettings:
     "party-games.neverHaveIEver.currentSettings.v1",
   neverHaveIEverActiveGame: "party-games.neverHaveIEver.activeGame.v1",
+  brainOnCurrentSettings: "party-games.brainOn.currentSettings.v1",
+  brainOnActiveGame: "party-games.brainOn.activeGame.v1",
 } as const;
 
 export type StorageKey = (typeof storageKeys)[keyof typeof storageKeys];

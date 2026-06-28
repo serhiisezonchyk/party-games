@@ -5,7 +5,8 @@ export type GameId =
   | "mafia"
   | "alias"
   | "truth-or-dare"
-  | "never-have-i-ever";
+  | "never-have-i-ever"
+  | "brain-on";
 
 export interface GameDefinition {
   descriptionKey: TranslationKey;
@@ -44,6 +45,12 @@ export const games = [
     titleKey: "games.neverHaveIEver.title",
     descriptionKey: "games.neverHaveIEver.description",
     playersKey: "games.neverHaveIEver.players",
+  },
+  {
+    id: "brain-on",
+    titleKey: "games.brainOn.title",
+    descriptionKey: "games.brainOn.description",
+    playersKey: "games.brainOn.players",
   },
 ] as const satisfies readonly GameDefinition[];
 

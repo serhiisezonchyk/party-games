@@ -431,6 +431,21 @@ const en = {
   "truthOrDare.game.endGame": "End game",
   "truthOrDare.game.penalty": "Penalty",
   "truthOrDare.game.promptMissing": "This prompt is no longer available.",
+  "truthOrDare.rules.goalTitle": "Goal",
+  "truthOrDare.rules.goalBody":
+    "Players take turns choosing Truth or Dare. The goal is to answer honestly, complete the challenge, and keep the group comfortable.",
+  "truthOrDare.rules.setupTitle": "Categories",
+  "truthOrDare.rules.setupBody":
+    "Choose one or more local categories before starting. Adult-only categories stay locked until 18+ content is unlocked in settings.",
+  "truthOrDare.rules.turnTitle": "Turn flow",
+  "truthOrDare.rules.turnBody":
+    "The current player chooses Truth or Dare, reads the revealed card aloud, and completes it before passing the phone to the next player.",
+  "truthOrDare.rules.skipTitle": "Skipping",
+  "truthOrDare.rules.skipBody":
+    "If alcohol mode is off, the group can reroll a revealed card. If alcohol mode is on, skipping should follow the shown penalty.",
+  "truthOrDare.rules.alcoholTitle": "Alcohol mode",
+  "truthOrDare.rules.alcoholBody":
+    "Alcohol mode adds a penalty to revealed cards. Keep it optional, respect limits, and let any player skip drinking without pressure.",
   "neverHaveIEver.setup.title": "Never Have I Ever setup",
   "neverHaveIEver.setup.subtitle":
     "Add players, choose question packs, and start a quick reveal round.",
@@ -490,6 +505,79 @@ const en = {
   "neverHaveIEver.rules.alcoholTitle": "Alcohol mode",
   "neverHaveIEver.rules.alcoholBody":
     "When alcohol mode is enabled, everyone who has done the card follows the shown sip instruction. Keep it optional and comfortable for the group.",
+  "brainOn.setup.title": "Brain On setup",
+  "brainOn.setup.subtitle":
+    "Add players, choose quiz categories, and start a fast round of party trivia.",
+  "brainOn.start.button": "Start game",
+  "brainOn.start.ready": "Setup is ready for gameplay.",
+  "brainOn.start.needPlayers": "Add at least 2 named participants to start.",
+  "brainOn.start.needCategories": "Select at least one quiz category.",
+  "brainOn.participants.title": "Participants",
+  "brainOn.participants.help":
+    "Long press and drag to reorder. Players answer in this order.",
+  "brainOn.settings.title": "Brain On settings",
+  "brainOn.settings.categories": "Categories",
+  "brainOn.settings.categorySummary": "{count} selected",
+  "brainOn.settings.adultBadge": "18+",
+  "brainOn.settings.lockedHint":
+    "Set your date of birth in settings to unlock this local 18+ option.",
+  "brainOn.settings.adultUnlock": "Adult content unlock",
+  "brainOn.settings.adultUnlocked":
+    "18+ local options are unlocked on this device.",
+  "brainOn.settings.openSettingsHint":
+    "Tap to add your date of birth in settings.",
+  "brainOn.settings.alcoholMode": "Alcohol mode",
+  "brainOn.settings.alcoholModeHelp":
+    "Wrong answers show a 1 to 3 sip penalty after the group checks the answer.",
+  "brainOn.category.history": "History",
+  "brainOn.category.historyDescription":
+    "Events, eras, leaders, and famous moments.",
+  "brainOn.category.oceans": "Oceans",
+  "brainOn.category.oceansDescription":
+    "Seas, ocean life, islands, and water facts.",
+  "brainOn.category.cars": "Cars",
+  "brainOn.category.carsDescription":
+    "Brands, models, body styles, and car basics.",
+  "brainOn.category.geography": "Geography",
+  "brainOn.category.geographyDescription":
+    "Countries, capitals, continents, rivers, and mountains.",
+  "brainOn.category.science": "Science",
+  "brainOn.category.scienceDescription":
+    "Space, biology, chemistry, physics, and nature.",
+  "brainOn.category.popCulture": "Pop culture",
+  "brainOn.category.popCultureDescription":
+    "Movies, music, games, shows, and famous characters.",
+  "brainOn.game.noActive.title": "No active Brain On game",
+  "brainOn.game.noActive.body":
+    "Start a new game from setup to create players and a question deck.",
+  "brainOn.game.noActive.back": "Back to setup",
+  "brainOn.game.currentPlayer": "Current player",
+  "brainOn.game.cardHelp":
+    "Answer out loud, then tap the card to check the answer.",
+  "brainOn.game.question": "Question",
+  "brainOn.game.answer": "Answer",
+  "brainOn.game.tapForAnswer": "Tap to reveal answer",
+  "brainOn.game.correct": "Correct",
+  "brainOn.game.wrong": "Wrong",
+  "brainOn.game.nextPlayer": "Next player",
+  "brainOn.game.endGame": "End game",
+  "brainOn.game.penalty": "Penalty",
+  "brainOn.game.penaltyInstruction": "Wrong answer: take {sips}.",
+  "brainOn.game.sip.one": "{count} sip",
+  "brainOn.game.sip.few": "{count} sips",
+  "brainOn.game.questionMissing": "This question is no longer available.",
+  "brainOn.rules.goalTitle": "Goal",
+  "brainOn.rules.goalBody":
+    "Players take turns answering quiz cards. The group checks the answer together and decides if the player was correct.",
+  "brainOn.rules.setupTitle": "Categories",
+  "brainOn.rules.setupBody":
+    "Choose one or more local question categories before starting. The deck is shuffled and works offline.",
+  "brainOn.rules.answerTitle": "Checking answers",
+  "brainOn.rules.answerBody":
+    "Tap the card to reveal the answer. For list questions, any fair set of correct examples should count.",
+  "brainOn.rules.alcoholTitle": "Alcohol mode",
+  "brainOn.rules.alcoholBody":
+    "When alcohol mode is enabled, wrong answers show a small sip penalty. Keep it optional and comfortable for the group.",
   "games.spy.title": "Spy",
   "games.spy.description":
     "One player is the spy. Everyone else knows the location and tries to find them.",
@@ -510,6 +598,10 @@ const en = {
   "games.neverHaveIEver.description":
     "Read cards, reveal who has done it, and optionally add sip penalties.",
   "games.neverHaveIEver.players": "2+ players",
+  "games.brainOn.title": "Brain On",
+  "games.brainOn.description":
+    "Answer quick quiz cards, flip to check, and let the group judge.",
+  "games.brainOn.players": "2+ players",
 } as const;
 
 type EnglishTranslationKey = keyof typeof en;
@@ -952,6 +1044,21 @@ const uk: Record<EnglishTranslationKey, string> = {
   "truthOrDare.game.endGame": "Завершити гру",
   "truthOrDare.game.penalty": "Штраф",
   "truthOrDare.game.promptMissing": "Це завдання більше недоступне.",
+  "truthOrDare.rules.goalTitle": "Мета",
+  "truthOrDare.rules.goalBody":
+    "Гравці по черзі обирають Правду або Дію. Мета — відповідати чесно, виконувати завдання й зберігати комфорт компанії.",
+  "truthOrDare.rules.setupTitle": "Категорії",
+  "truthOrDare.rules.setupBody":
+    "Перед стартом оберіть одну або кілька локальних категорій. Категорії 18+ залишаються заблокованими, доки контент 18+ не відкрито в налаштуваннях.",
+  "truthOrDare.rules.turnTitle": "Хід гри",
+  "truthOrDare.rules.turnBody":
+    "Поточний гравець обирає Правду або Дію, читає відкриту картку вголос і виконує її перед тим, як передати телефон наступному гравцю.",
+  "truthOrDare.rules.skipTitle": "Пропуск",
+  "truthOrDare.rules.skipBody":
+    "Якщо алкорежим вимкнено, компанія може змінити відкриту картку. Якщо алкорежим увімкнено, пропуск має йти за показаним штрафом.",
+  "truthOrDare.rules.alcoholTitle": "Алкорежим",
+  "truthOrDare.rules.alcoholBody":
+    "Алкорежим додає штраф до відкритих карток. Нехай він залишається добровільним: поважайте межі й дозволяйте будь-кому не пити без тиску.",
   "neverHaveIEver.setup.title": "Налаштування «Я ніколи не...»",
   "neverHaveIEver.setup.subtitle":
     "Додайте гравців, оберіть набори питань і швидко починайте раунд.",
@@ -1011,6 +1118,80 @@ const uk: Record<EnglishTranslationKey, string> = {
   "neverHaveIEver.rules.alcoholTitle": "Алкорежим",
   "neverHaveIEver.rules.alcoholBody":
     "Коли алкорежим увімкнено, усі, хто робив написане на картці, виконують показану інструкцію з ковтками. Нехай це залишається добровільним і комфортним для компанії.",
+  "brainOn.setup.title": "Налаштування Мозок On",
+  "brainOn.setup.subtitle":
+    "Додайте гравців, оберіть категорії вікторини й починайте швидкий раунд.",
+  "brainOn.start.button": "Почати гру",
+  "brainOn.start.ready": "Налаштування готове до гри.",
+  "brainOn.start.needPlayers":
+    "Додайте щонайменше 2 учасників з іменами, щоб почати.",
+  "brainOn.start.needCategories": "Оберіть хоча б одну категорію вікторини.",
+  "brainOn.participants.title": "Учасники",
+  "brainOn.participants.help":
+    "Затисніть і перетягніть, щоб змінити порядок. Гравці відповідають у цьому порядку.",
+  "brainOn.settings.title": "Налаштування Мозок On",
+  "brainOn.settings.categories": "Категорії",
+  "brainOn.settings.categorySummary": "Обрано: {count}",
+  "brainOn.settings.adultBadge": "18+",
+  "brainOn.settings.lockedHint":
+    "Вкажіть дату народження в налаштуваннях, щоб відкрити цю локальну опцію 18+.",
+  "brainOn.settings.adultUnlock": "Доступ до контенту 18+",
+  "brainOn.settings.adultUnlocked":
+    "Локальні опції 18+ відкриті на цьому пристрої.",
+  "brainOn.settings.openSettingsHint":
+    "Натисніть, щоб додати дату народження в налаштуваннях.",
+  "brainOn.settings.alcoholMode": "Алкорежим",
+  "brainOn.settings.alcoholModeHelp":
+    "Після неправильної відповіді показується штраф від 1 до 3 ковтків.",
+  "brainOn.category.history": "Історія",
+  "brainOn.category.historyDescription":
+    "Події, епохи, лідери та відомі моменти.",
+  "brainOn.category.oceans": "Океани",
+  "brainOn.category.oceansDescription":
+    "Моря, океанічне життя, острови та факти про воду.",
+  "brainOn.category.cars": "Авто",
+  "brainOn.category.carsDescription":
+    "Бренди, моделі, типи кузова та автомобільні основи.",
+  "brainOn.category.geography": "Географія",
+  "brainOn.category.geographyDescription":
+    "Країни, столиці, континенти, річки та гори.",
+  "brainOn.category.science": "Наука",
+  "brainOn.category.scienceDescription":
+    "Космос, біологія, хімія, фізика та природа.",
+  "brainOn.category.popCulture": "Попкультура",
+  "brainOn.category.popCultureDescription":
+    "Фільми, музика, ігри, шоу та відомі персонажі.",
+  "brainOn.game.noActive.title": "Немає активної гри Мозок On",
+  "brainOn.game.noActive.body":
+    "Почніть нову гру з налаштувань, щоб створити гравців і колоду питань.",
+  "brainOn.game.noActive.back": "До налаштувань",
+  "brainOn.game.currentPlayer": "Поточний гравець",
+  "brainOn.game.cardHelp":
+    "Відповідайте вголос, а потім натисніть на картку, щоб перевірити відповідь.",
+  "brainOn.game.question": "Питання",
+  "brainOn.game.answer": "Відповідь",
+  "brainOn.game.tapForAnswer": "Натисніть, щоб відкрити відповідь",
+  "brainOn.game.correct": "Правильно",
+  "brainOn.game.wrong": "Неправильно",
+  "brainOn.game.nextPlayer": "Наступний гравець",
+  "brainOn.game.endGame": "Завершити гру",
+  "brainOn.game.penalty": "Штраф",
+  "brainOn.game.penaltyInstruction": "Неправильна відповідь: зроби {sips}.",
+  "brainOn.game.sip.one": "{count} ковток",
+  "brainOn.game.sip.few": "{count} ковтки",
+  "brainOn.game.questionMissing": "Це питання більше недоступне.",
+  "brainOn.rules.goalTitle": "Мета",
+  "brainOn.rules.goalBody":
+    "Гравці по черзі відповідають на картки вікторини. Компанія разом перевіряє відповідь і вирішує, чи вона правильна.",
+  "brainOn.rules.setupTitle": "Категорії",
+  "brainOn.rules.setupBody":
+    "Оберіть одну або кілька локальних категорій питань перед стартом. Колода перемішується й працює офлайн.",
+  "brainOn.rules.answerTitle": "Перевірка відповідей",
+  "brainOn.rules.answerBody":
+    "Натисніть на картку, щоб відкрити відповідь. У питаннях зі списками зараховуйте будь-який чесний набір правильних прикладів.",
+  "brainOn.rules.alcoholTitle": "Алкорежим",
+  "brainOn.rules.alcoholBody":
+    "Коли алкорежим увімкнено, неправильні відповіді показують невеликий штраф у ковтках. Нехай це залишається добровільним і комфортним для компанії.",
   "games.spy.title": "Шпигун",
   "games.spy.description":
     "Один гравець є шпигуном. Інші знають локацію та намагаються його знайти.",
@@ -1031,6 +1212,10 @@ const uk: Record<EnglishTranslationKey, string> = {
   "games.neverHaveIEver.description":
     "Читайте картки, дізнавайтеся, хто це робив, і за бажанням додавайте ковтки.",
   "games.neverHaveIEver.players": "2+ гравці",
+  "games.brainOn.title": "Мозок On",
+  "games.brainOn.description":
+    "Відповідайте на швидкі питання, відкривайте відповідь і оцінюйте всією компанією.",
+  "games.brainOn.players": "2+ гравці",
 };
 
 export const translations = {

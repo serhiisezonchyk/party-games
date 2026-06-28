@@ -55,7 +55,26 @@ const gameRuleSections: Record<GameId, RulesSection[]> = {
     { titleKey: "alias.rules.scoreTitle", bodyKey: "alias.rules.scoreBody" },
   ],
   "truth-or-dare": [
-    { titleKey: "game.rules.soonTitle", bodyKey: "game.rules.soonBody" },
+    {
+      titleKey: "truthOrDare.rules.goalTitle",
+      bodyKey: "truthOrDare.rules.goalBody",
+    },
+    {
+      titleKey: "truthOrDare.rules.setupTitle",
+      bodyKey: "truthOrDare.rules.setupBody",
+    },
+    {
+      titleKey: "truthOrDare.rules.turnTitle",
+      bodyKey: "truthOrDare.rules.turnBody",
+    },
+    {
+      titleKey: "truthOrDare.rules.skipTitle",
+      bodyKey: "truthOrDare.rules.skipBody",
+    },
+    {
+      titleKey: "truthOrDare.rules.alcoholTitle",
+      bodyKey: "truthOrDare.rules.alcoholBody",
+    },
   ],
   "never-have-i-ever": [
     {
@@ -69,6 +88,21 @@ const gameRuleSections: Record<GameId, RulesSection[]> = {
     {
       titleKey: "neverHaveIEver.rules.alcoholTitle",
       bodyKey: "neverHaveIEver.rules.alcoholBody",
+    },
+  ],
+  "brain-on": [
+    { titleKey: "brainOn.rules.goalTitle", bodyKey: "brainOn.rules.goalBody" },
+    {
+      titleKey: "brainOn.rules.setupTitle",
+      bodyKey: "brainOn.rules.setupBody",
+    },
+    {
+      titleKey: "brainOn.rules.answerTitle",
+      bodyKey: "brainOn.rules.answerBody",
+    },
+    {
+      titleKey: "brainOn.rules.alcoholTitle",
+      bodyKey: "brainOn.rules.alcoholBody",
     },
   ],
 };

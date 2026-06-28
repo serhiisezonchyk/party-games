@@ -30,6 +30,10 @@ const gameVisuals = {
     color: "#EF4444",
     icon: "local-bar",
   },
+  "brain-on": {
+    color: "#0EA5E9",
+    icon: "psychology",
+  },
 } as const;
 
 const titleFontFamily = "Montserrat";

@@ -56,7 +56,8 @@
     "test:mafia": "node scripts/check-mafia-engine.cjs",
     "test:spy": "node scripts/check-spy-content.cjs",
     "test:never-have-i-ever": "node scripts/check-never-have-i-ever-content.cjs",
-    "test:truth-or-dare": "node scripts/check-truth-or-dare-content.cjs"
+    "test:truth-or-dare": "node scripts/check-truth-or-dare-content.cjs",
+    "test:brain-on": "node scripts/check-brain-on-content.cjs"
   },
   "version": "1.0.0",
   "main": "expo-router/entry",

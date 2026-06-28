@@ -9,6 +9,7 @@ import { Colors } from "@/constants/theme";
 import { usePreferences } from "@/contexts/preferences-context";
 import { getGameById } from "@/data/games";
 import { AliasSetupScreen } from "@/features/alias/alias-setup-screen";
+import { BrainOnSetupScreen } from "@/features/brain-on/brain-on-setup-screen";
 import { GameRulesModal } from "@/features/game-rules-modal";
 import { MafiaSetupScreen } from "@/features/mafia/mafia-setup-screen";
 import { NeverHaveIEverSetupScreen } from "@/features/never-have-i-ever/never-have-i-ever-setup-screen";
@@ -174,6 +175,32 @@ export default function GameScreen() {
           }}
         />
         <NeverHaveIEverSetupScreen />
+        <GameRulesModal
+          gameId={game.id}
+          onClose={() => setIsRulesVisible(false)}
+          palette={palette}
+          t={t}
+          visible={isRulesVisible}
+        />
+      </>
+    );
+  }
+
+  if (game.id === "brain-on") {
+    return (
+      <>
+        <Stack.Screen
+          options={{
+            title: t(game.titleKey),
+            headerRight: () => (
+              <View style={styles.headerActions}>
+                <HeaderInfoButton onPress={() => setIsRulesVisible(true)} />
+                <HeaderSettingsButton />
+              </View>
+            ),
+          }}
+        />
+        <BrainOnSetupScreen />
         <GameRulesModal
           gameId={game.id}
           onClose={() => setIsRulesVisible(false)}
