@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { ParticleBackground } from "@/components/particle-background";
 import { Colors } from "@/constants/theme";
 import { usePreferences } from "@/contexts/preferences-context";
 import { AliasSettingsPanel } from "@/features/alias/alias-settings-panel";
@@ -154,6 +155,7 @@ export function AliasSetupScreen() {
       style={[styles.screen, { backgroundColor: palette.background }]}
     >
       <ScrollView contentContainerStyle={styles.content}>
+        <ParticleBackground theme={effectiveTheme} />
         <View style={styles.hero}>
           <Text style={[styles.title, { color: palette.text }]}>
             {t("alias.setup.title")}
@@ -263,6 +265,7 @@ const styles = StyleSheet.create({
     gap: 18,
     padding: 20,
     paddingBottom: 132,
+    position: "relative",
   },
   hero: {
     gap: 8,
@@ -308,6 +311,7 @@ const styles = StyleSheet.create({
     padding: 16,
     position: "absolute",
     right: 0,
+    zIndex: 2,
   },
   footerHint: {
     fontSize: 13,

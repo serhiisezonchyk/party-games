@@ -3,8 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { NestableScrollContainer } from "react-native-draggable-flatlist";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { ParticipantsList } from "@/components/participants-list";
+import { ParticleBackground } from "@/components/particle-background";
 import { Colors } from "@/constants/theme";
 import { usePreferences } from "@/contexts/preferences-context";
 import { BrainOnSettingsPanel } from "@/features/brain-on/brain-on-settings-panel";
@@ -181,6 +181,7 @@ export function BrainOnSetupScreen() {
       style={[styles.screen, { backgroundColor: palette.background }]}
     >
       <NestableScrollContainer contentContainerStyle={styles.content}>
+        <ParticleBackground theme={effectiveTheme} />
         <View style={styles.hero}>
           <Text style={[styles.title, { color: palette.text }]}>
             {t("brainOn.setup.title")}
@@ -282,6 +283,7 @@ const styles = StyleSheet.create({
     gap: 18,
     padding: 20,
     paddingBottom: 124,
+    position: "relative",
   },
   hero: {
     gap: 8,
@@ -320,6 +322,7 @@ const styles = StyleSheet.create({
     padding: 16,
     position: "absolute",
     right: 0,
+    zIndex: 2,
   },
   footerHint: {
     fontSize: 13,
