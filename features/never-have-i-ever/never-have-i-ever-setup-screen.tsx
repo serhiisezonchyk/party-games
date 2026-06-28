@@ -181,8 +181,8 @@ export function NeverHaveIEverSetupScreen() {
       edges={["bottom"]}
       style={[styles.screen, { backgroundColor: palette.background }]}
     >
+      <ParticleBackground theme={effectiveTheme} />
       <NestableScrollContainer contentContainerStyle={styles.content}>
-        <ParticleBackground theme={effectiveTheme} />
         <View style={styles.hero}>
           <Text style={[styles.title, { color: palette.text }]}>
             {t("neverHaveIEver.setup.title")}

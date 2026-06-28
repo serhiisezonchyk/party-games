@@ -1,5 +1,6 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { BlurView } from "expo-blur";
 import { Stack, useRouter } from "expo-router";
 import { useEffect, useRef } from "react";
 import {
@@ -214,14 +215,28 @@ const backgroundParticles = [
     id: "p39",
     color: "#F59E0B",
     left: "21%",
-    size: 10,
+    size: 13,
     top: "20%",
     travel: 54,
   },
   { id: "p40", color: "#EC4899", left: "47%", size: 2, top: "29%", travel: 62 },
-  { id: "p41", color: "#818CF8", left: "66%", size: 8, top: "30%", travel: 48 },
+  {
+    id: "p41",
+    color: "#818CF8",
+    left: "66%",
+    size: 14,
+    top: "30%",
+    travel: 48,
+  },
   { id: "p42", color: "#2DD4BF", left: "98%", size: 3, top: "33%", travel: 72 },
-  { id: "p43", color: "#3B82F6", left: "11%", size: 9, top: "40%", travel: 56 },
+  {
+    id: "p43",
+    color: "#3B82F6",
+    left: "11%",
+    size: 15,
+    top: "40%",
+    travel: 56,
+  },
   { id: "p44", color: "#A855F7", left: "24%", size: 2, top: "44%", travel: 68 },
   { id: "p45", color: "#EF4444", left: "39%", size: 7, top: "46%", travel: 46 },
   { id: "p46", color: "#0EA5E9", left: "58%", size: 2, top: "56%", travel: 76 },
@@ -229,25 +244,39 @@ const backgroundParticles = [
     id: "p47",
     color: "#F59E0B",
     left: "74%",
-    size: 10,
+    size: 16,
     top: "58%",
     travel: 52,
   },
   { id: "p48", color: "#14B8A6", left: "91%", size: 2, top: "60%", travel: 60 },
-  { id: "p49", color: "#EC4899", left: "5%", size: 7, top: "68%", travel: 44 },
+  { id: "p49", color: "#EC4899", left: "5%", size: 13, top: "68%", travel: 44 },
   { id: "p50", color: "#22D3EE", left: "33%", size: 2, top: "71%", travel: 66 },
-  { id: "p51", color: "#8B5CF6", left: "55%", size: 8, top: "73%", travel: 50 },
+  {
+    id: "p51",
+    color: "#8B5CF6",
+    left: "55%",
+    size: 15,
+    top: "73%",
+    travel: 50,
+  },
   { id: "p52", color: "#F97316", left: "84%", size: 3, top: "75%", travel: 74 },
   {
     id: "p53",
     color: "#3B82F6",
     left: "14%",
-    size: 10,
+    size: 16,
     top: "84%",
     travel: 58,
   },
   { id: "p54", color: "#A855F7", left: "45%", size: 2, top: "86%", travel: 42 },
-  { id: "p55", color: "#2DD4BF", left: "72%", size: 9, top: "88%", travel: 70 },
+  {
+    id: "p55",
+    color: "#2DD4BF",
+    left: "72%",
+    size: 14,
+    top: "88%",
+    travel: 70,
+  },
   { id: "p56", color: "#EF4444", left: "95%", size: 2, top: "90%", travel: 48 },
   { id: "p57", color: "#818CF8", left: "1%", size: 4, top: "98%", travel: 64 },
   { id: "p58", color: "#F59E0B", left: "29%", size: 8, top: "99%", travel: 54 },
@@ -258,6 +287,10 @@ const backgroundParticles = [
   { id: "p63", color: "#22D3EE", left: "62%", size: 2, top: "81%", travel: 56 },
   { id: "p64", color: "#F97316", left: "87%", size: 8, top: "23%", travel: 72 },
 ] as const;
+
+const visibleBackgroundParticles = backgroundParticles.filter(
+  (_, index) => index % 2 === 0
+);
 
 function getPlayersParts(players: string) {
   const [count, ...labelParts] = players.split(" ");
@@ -275,8 +308,11 @@ function getHomePalette(theme: "light" | "dark") {
     return {
       background: palette.background,
       card: palette.card,
-      cardBorder: palette.border,
+      cardBorder: "rgba(255, 255, 255, 0.18)",
+      cardGlassOverlay: "rgba(18, 20, 32, 0.04)",
+      cardInnerBorder: "rgba(255, 255, 255, 0.16)",
       countPill: "rgba(124, 58, 237, 0.18)",
+      glassControl: "rgba(255, 255, 255, 0.07)",
       luckyBorder: "#6D28D9",
       muted: palette.mutedText,
       nav: palette.background,
@@ -290,8 +326,11 @@ function getHomePalette(theme: "light" | "dark") {
   return {
     background: palette.background,
     card: palette.card,
-    cardBorder: palette.border,
+    cardBorder: "rgba(124, 58, 237, 0.28)",
+    cardGlassOverlay: "rgba(255, 255, 255, 0.015)",
+    cardInnerBorder: "rgba(255, 255, 255, 0.42)",
     countPill: "#F0E6FF",
+    glassControl: "rgba(255, 255, 255, 0.28)",
     luckyBorder: "#E9D7FF",
     muted: palette.mutedText,
     nav: palette.background,
@@ -326,7 +365,7 @@ function ParticleBackground({ theme }: { theme: "light" | "dark" }) {
 
   return (
     <View pointerEvents="none" style={styles.particleLayer}>
-      {backgroundParticles.map((particle, index) => {
+      {visibleBackgroundParticles.map((particle, index) => {
         const direction = index % 2 === 0 ? 1 : -1;
         const translateY = progress.interpolate({
           inputRange: [0, 0.28, 0.62, 1],
@@ -501,12 +540,12 @@ export default function HomeScreen() {
           title: "",
         }}
       />
+      <ParticleBackground theme={effectiveTheme} />
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
         style={styles.scrollArea}
       >
-        <ParticleBackground theme={effectiveTheme} />
         <View style={styles.hero}>
           <HeaderConfetti />
 
@@ -564,7 +603,7 @@ export default function HomeScreen() {
                 style={({ pressed }) => [
                   styles.card,
                   {
-                    backgroundColor: homePalette.card,
+                    backgroundColor: "transparent",
                     borderColor: homePalette.cardBorder,
                     opacity: pressed ? 0.78 : 1,
                     shadowColor: homePalette.shadow,
@@ -572,18 +611,33 @@ export default function HomeScreen() {
                   },
                 ]}
               >
+                <BlurView
+                  blurReductionFactor={1}
+                  experimentalBlurMethod="dimezisBlurView"
+                  intensity={30}
+                  pointerEvents="none"
+                  style={styles.cardBlur}
+                  tint={effectiveTheme === "dark" ? "dark" : "light"}
+                />
+                <View
+                  pointerEvents="none"
+                  style={[
+                    styles.cardInnerBorder,
+                    { borderColor: homePalette.cardInnerBorder },
+                  ]}
+                />
                 <View
                   style={[
                     styles.gameIconBox,
                     {
                       backgroundColor:
                         effectiveTheme === "dark"
-                          ? `${visual.color}25`
-                          : `${visual.color}14`,
+                          ? `${visual.color}20`
+                          : `${visual.color}0F`,
                       borderColor:
                         effectiveTheme === "dark"
-                          ? `${visual.color}60`
-                          : "transparent",
+                          ? `${visual.color}45`
+                          : `${visual.color}28`,
                     },
                   ]}
                 >
@@ -625,7 +679,7 @@ export default function HomeScreen() {
                     style={[
                       styles.chevron,
                       {
-                        backgroundColor: homePalette.surface,
+                        backgroundColor: homePalette.glassControl,
                         shadowColor: homePalette.shadow,
                       },
                     ]}
@@ -693,7 +747,6 @@ const styles = StyleSheet.create({
   },
   particleLayer: {
     ...StyleSheet.absoluteFillObject,
-    minHeight: 1120,
     zIndex: 0,
   },
   particle: {
@@ -796,10 +849,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 16,
     minHeight: 126,
+    overflow: "hidden",
     padding: 14,
+    position: "relative",
     shadowOffset: { height: 7, width: 0 },
-    shadowOpacity: 0.08,
-    shadowRadius: 18,
+    shadowOpacity: 0.14,
+    shadowRadius: 22,
+  },
+  cardBlur: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  cardGlassOverlay: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  cardInnerBorder: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: 15,
+    borderWidth: 1,
   },
   gameIconBox: {
     alignItems: "center",

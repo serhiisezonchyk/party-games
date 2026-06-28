@@ -154,8 +154,8 @@ export function AliasSetupScreen() {
       edges={["bottom"]}
       style={[styles.screen, { backgroundColor: palette.background }]}
     >
+      <ParticleBackground theme={effectiveTheme} />
       <ScrollView contentContainerStyle={styles.content}>
-        <ParticleBackground theme={effectiveTheme} />
         <View style={styles.hero}>
           <Text style={[styles.title, { color: palette.text }]}>
             {t("alias.setup.title")}

@@ -4,7 +4,6 @@ import { Animated, Easing, StyleSheet, View } from "react-native";
 type ThemeMode = "light" | "dark";
 
 interface ParticleBackgroundProps {
-  minHeight?: number;
   theme: ThemeMode;
 }
 
@@ -19,7 +18,7 @@ const particleColors = [
   "#A855F7",
 ] as const;
 
-const particles = Array.from({ length: 76 }, (_, index) => {
+const particles = Array.from({ length: 44 }, (_, index) => {
   const column = (index * 29) % 101;
   const row = (index * 17) % 101;
   const size = 2 + ((index * 7) % 9);
@@ -34,10 +33,7 @@ const particles = Array.from({ length: 76 }, (_, index) => {
   };
 });
 
-export function ParticleBackground({
-  minHeight = 1200,
-  theme,
-}: ParticleBackgroundProps) {
+export function ParticleBackground({ theme }: ParticleBackgroundProps) {
   const progress = useRef(new Animated.Value(0)).current;
   const particleOpacity = theme === "dark" ? 0.42 : 0.3;
 
@@ -60,7 +56,7 @@ export function ParticleBackground({
   }, [progress]);
 
   return (
-    <View pointerEvents="none" style={[styles.layer, { minHeight }]}>
+    <View pointerEvents="none" style={styles.layer}>
       {particles.map((particle, index) => {
         const direction = index % 2 === 0 ? 1 : -1;
         const translateY = progress.interpolate({

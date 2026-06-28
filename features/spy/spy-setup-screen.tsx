@@ -228,8 +228,8 @@ export function SpySetupScreen() {
       edges={["bottom"]}
       style={[styles.screen, { backgroundColor: palette.background }]}
     >
+      <ParticleBackground theme={effectiveTheme} />
       <NestableScrollContainer contentContainerStyle={styles.content}>
-        <ParticleBackground theme={effectiveTheme} />
         <View style={styles.hero}>
           <Text style={[styles.title, { color: palette.text }]}>
             {t("spy.setup.title")}
