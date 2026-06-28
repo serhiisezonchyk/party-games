@@ -29,6 +29,7 @@ interface PreferencesContextValue {
   isSettingsVisible: boolean;
   openSettings: () => void;
   preferences: AppPreferences;
+  setDateOfBirthIso: (dateOfBirthIso?: string) => void;
   setLanguageMode: (languageMode: LanguageMode) => void;
   setThemeMode: (themeMode: ThemeMode) => void;
   t: (key: TranslationKey) => string;
@@ -97,6 +98,16 @@ export function PreferencesProvider({ children }: PropsWithChildren) {
     [preferences, updatePreferences]
   );
 
+  const setDateOfBirthIso = useCallback(
+    (dateOfBirthIso?: string) => {
+      updatePreferences({
+        ...preferences,
+        dateOfBirthIso,
+      });
+    },
+    [preferences, updatePreferences]
+  );
+
   const effectiveTheme: EffectiveTheme =
     preferences.themeMode === "system"
       ? resolveSystemTheme(systemTheme)
@@ -115,6 +126,7 @@ export function PreferencesProvider({ children }: PropsWithChildren) {
       isSettingsVisible,
       setThemeMode,
       setLanguageMode,
+      setDateOfBirthIso,
       openSettings: () => setIsSettingsVisible(true),
       closeSettings: () => setIsSettingsVisible(false),
       t: (key) => translate(effectiveLanguage, key),
@@ -124,6 +136,7 @@ export function PreferencesProvider({ children }: PropsWithChildren) {
       effectiveTheme,
       isSettingsVisible,
       preferences,
+      setDateOfBirthIso,
       setLanguageMode,
       setThemeMode,
     ]

@@ -45,7 +45,15 @@ const gameRuleSections: Record<GameId, RulesSection[]> = {
     { titleKey: "spy.rules.spyGuessTitle", bodyKey: "spy.rules.spyGuessBody" },
     { titleKey: "spy.rules.timerTitle", bodyKey: "spy.rules.timerBody" },
   ],
-  alias: [{ titleKey: "game.rules.soonTitle", bodyKey: "game.rules.soonBody" }],
+  alias: [
+    { titleKey: "alias.rules.goalTitle", bodyKey: "alias.rules.goalBody" },
+    { titleKey: "alias.rules.teamsTitle", bodyKey: "alias.rules.teamsBody" },
+    {
+      titleKey: "alias.rules.explainTitle",
+      bodyKey: "alias.rules.explainBody",
+    },
+    { titleKey: "alias.rules.scoreTitle", bodyKey: "alias.rules.scoreBody" },
+  ],
   "truth-or-dare": [
     { titleKey: "game.rules.soonTitle", bodyKey: "game.rules.soonBody" },
   ],

@@ -2,6 +2,7 @@
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
     "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-community/datetimepicker": "8.4.4",
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/elements": "^2.6.3",
     "@react-navigation/native": "^7.1.8",
@@ -51,6 +52,7 @@
     "lint": "expo lint",
     "check": "ultracite check",
     "fix": "ultracite fix",
+    "test:alias": "node scripts/check-alias-content.cjs",
     "test:mafia": "node scripts/check-mafia-engine.cjs",
     "test:spy": "node scripts/check-spy-content.cjs"
   },

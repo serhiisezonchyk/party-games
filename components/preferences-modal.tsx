@@ -1,9 +1,13 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import DateTimePicker, {
+  type DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
 import { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Easing,
   Modal,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -14,6 +18,44 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Colors } from "@/constants/theme";
 import { usePreferences } from "@/contexts/preferences-context";
 import type { LanguageMode, ThemeMode } from "@/storage/preferences-storage";
+
+function formatDateOnly(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+function parseDateOnly(value?: string) {
+  if (!value) {
+    return null;
+  }
+
+  const [year, month, day] = value.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+
+  if (
+    Number.isNaN(date.getTime()) ||
+    date.getFullYear() !== year ||
+    date.getMonth() !== month - 1 ||
+    date.getDate() !== day
+  ) {
+    return null;
+  }
+
+  return date;
+}
+
+function formatDisplayDate(value?: string) {
+  const date = parseDateOnly(value);
+
+  if (!date) {
+    return "";
+  }
+
+  return date.toLocaleDateString();
+}
 
 interface SegmentOption<T extends string> {
   label: string;
@@ -72,6 +114,7 @@ export function PreferencesModal() {
     effectiveTheme,
     isSettingsVisible,
     closeSettings,
+    setDateOfBirthIso,
     setLanguageMode,
     setThemeMode,
     t,
@@ -79,7 +122,10 @@ export function PreferencesModal() {
   const palette = Colors[effectiveTheme];
   const insets = useSafeAreaInsets();
   const [isRendered, setIsRendered] = useState(isSettingsVisible);
+  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const animationProgress = useRef(new Animated.Value(0)).current;
+  const selectedBirthDate = parseDateOnly(preferences.dateOfBirthIso);
+  const datePickerValue = selectedBirthDate ?? new Date(2000, 0, 1);
 
   useEffect(() => {
     if (isSettingsVisible) {
@@ -127,6 +173,18 @@ export function PreferencesModal() {
     inputRange: [0, 1],
     outputRange: [420, 0],
   });
+
+  function handleDateChange(event: DateTimePickerEvent, selectedDate?: Date) {
+    if (Platform.OS === "android") {
+      setIsDatePickerVisible(false);
+    }
+
+    if (event.type === "dismissed" || !selectedDate) {
+      return;
+    }
+
+    setDateOfBirthIso(formatDateOnly(selectedDate));
+  }
 
   if (!isRendered) {
     return null;
@@ -208,6 +266,65 @@ export function PreferencesModal() {
                 value={preferences.themeMode}
               />
             </View>
+
+            <View style={styles.section}>
+              <Text style={[styles.label, { color: palette.text }]}>
+                {t("settings.dateOfBirth")}
+              </Text>
+              <Text style={[styles.helperText, { color: palette.mutedText }]}>
+                {t("settings.dateOfBirthHelp")}
+              </Text>
+              <View style={styles.dateRow}>
+                <Pressable
+                  accessibilityRole="button"
+                  onPress={() => setIsDatePickerVisible(true)}
+                  style={({ pressed }) => [
+                    styles.dateButton,
+                    {
+                      backgroundColor: palette.surface,
+                      borderColor: palette.border,
+                      opacity: pressed ? 0.72 : 1,
+                    },
+                  ]}
+                >
+                  <MaterialIcons color={palette.tint} name="cake" size={20} />
+                  <Text style={[styles.dateText, { color: palette.text }]}>
+                    {preferences.dateOfBirthIso
+                      ? formatDisplayDate(preferences.dateOfBirthIso)
+                      : t("settings.dateOfBirthUnset")}
+                  </Text>
+                </Pressable>
+                {preferences.dateOfBirthIso ? (
+                  <Pressable
+                    accessibilityLabel={t("settings.clearDateOfBirth")}
+                    accessibilityRole="button"
+                    onPress={() => setDateOfBirthIso(undefined)}
+                    style={({ pressed }) => [
+                      styles.clearButton,
+                      {
+                        backgroundColor: palette.surface,
+                        opacity: pressed ? 0.72 : 1,
+                      },
+                    ]}
+                  >
+                    <MaterialIcons
+                      color={palette.mutedText}
+                      name="close"
+                      size={20}
+                    />
+                  </Pressable>
+                ) : null}
+              </View>
+              {isDatePickerVisible ? (
+                <DateTimePicker
+                  display={Platform.OS === "ios" ? "spinner" : "default"}
+                  maximumDate={new Date()}
+                  mode="date"
+                  onChange={handleDateChange}
+                  value={datePickerValue}
+                />
+              ) : null}
+            </View>
           </Pressable>
         </Animated.View>
       </Pressable>
@@ -266,6 +383,37 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: "700",
+  },
+  helperText: {
+    fontSize: 13,
+    lineHeight: 19,
+  },
+  dateRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 10,
+  },
+  dateButton: {
+    alignItems: "center",
+    borderRadius: 14,
+    borderWidth: 1,
+    flex: 1,
+    flexDirection: "row",
+    gap: 10,
+    minHeight: 48,
+    paddingHorizontal: 14,
+  },
+  dateText: {
+    flex: 1,
+    fontSize: 15,
+    fontWeight: "700",
+  },
+  clearButton: {
+    alignItems: "center",
+    borderRadius: 16,
+    height: 42,
+    justifyContent: "center",
+    width: 42,
   },
   segmentGroup: {
     borderRadius: 14,

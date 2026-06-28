@@ -8,6 +8,7 @@ import { HeaderSettingsButton } from "@/components/header-settings-button";
 import { Colors } from "@/constants/theme";
 import { usePreferences } from "@/contexts/preferences-context";
 import { getGameById } from "@/data/games";
+import { AliasSetupScreen } from "@/features/alias/alias-setup-screen";
 import { GameRulesModal } from "@/features/game-rules-modal";
 import { MafiaSetupScreen } from "@/features/mafia/mafia-setup-screen";
 import { SpySetupScreen } from "@/features/spy/spy-setup-screen";
@@ -93,6 +94,32 @@ export default function GameScreen() {
           }}
         />
         <SpySetupScreen />
+        <GameRulesModal
+          gameId={game.id}
+          onClose={() => setIsRulesVisible(false)}
+          palette={palette}
+          t={t}
+          visible={isRulesVisible}
+        />
+      </>
+    );
+  }
+
+  if (game.id === "alias") {
+    return (
+      <>
+        <Stack.Screen
+          options={{
+            title: t(game.titleKey),
+            headerRight: () => (
+              <View style={styles.headerActions}>
+                <HeaderInfoButton onPress={() => setIsRulesVisible(true)} />
+                <HeaderSettingsButton />
+              </View>
+            ),
+          }}
+        />
+        <AliasSetupScreen />
         <GameRulesModal
           gameId={game.id}
           onClose={() => setIsRulesVisible(false)}

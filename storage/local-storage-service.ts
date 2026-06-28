@@ -10,6 +10,9 @@ export const storageKeys = {
   spyCurrentSettings: "party-games.spy.currentSettings.v1",
   spyCustomContent: "party-games.spy.customContent.v1",
   spyActiveGame: "party-games.spy.activeGame.v1",
+  aliasTeams: "party-games.alias.teams.v1",
+  aliasCurrentSettings: "party-games.alias.currentSettings.v1",
+  aliasActiveGame: "party-games.alias.activeGame.v1",
 } as const;
 
 export type StorageKey = (typeof storageKeys)[keyof typeof storageKeys];
