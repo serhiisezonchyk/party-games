@@ -1,10 +1,11 @@
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Stack, useRouter } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { HeaderSettingsButton } from "@/components/header-settings-button";
+import { Colors } from "@/constants/theme";
 import { usePreferences } from "@/contexts/preferences-context";
 import { type GameId, games } from "@/data/games";
 
@@ -111,34 +112,36 @@ function getPlayersParts(players: string) {
 }
 
 function getHomePalette(theme: "light" | "dark") {
+  const palette = Colors[theme];
+
   if (theme === "dark") {
     return {
-      background: "#020714",
-      card: "rgba(15, 23, 42, 0.86)",
-      cardBorder: "#24304A",
+      background: palette.background,
+      card: palette.card,
+      cardBorder: palette.border,
       countPill: "rgba(124, 58, 237, 0.18)",
       luckyBorder: "#6D28D9",
-      muted: "#D6D9E6",
-      nav: "rgba(10, 16, 31, 0.94)",
+      muted: palette.mutedText,
+      nav: palette.background,
       shadow: "#000000",
-      surface: "rgba(255, 255, 255, 0.08)",
-      text: "#FFFFFF",
-      title: "#FFFFFF",
+      surface: palette.surface,
+      text: palette.text,
+      title: palette.text,
     };
   }
 
   return {
-    background: "#FFFFFF",
-    card: "#FFFFFF",
-    cardBorder: "#E6E9F0",
+    background: palette.background,
+    card: palette.card,
+    cardBorder: palette.border,
     countPill: "#F0E6FF",
     luckyBorder: "#E9D7FF",
-    muted: "#5E667A",
-    nav: "#FFFFFF",
+    muted: palette.mutedText,
+    nav: palette.background,
     shadow: "#B7BED0",
-    surface: "#F7F4FF",
-    text: "#071025",
-    title: "#111827",
+    surface: palette.surface,
+    text: palette.text,
+    title: palette.text,
   };
 }
 

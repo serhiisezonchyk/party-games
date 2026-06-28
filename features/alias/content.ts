@@ -111,11 +111,7 @@ function createCuratedPackages(
     id: seed.id,
     label: { en: seed.label[0], uk: seed.label[1] },
     categories: seed.categories.map((categorySeed) =>
-      createCuratedCategory(
-        categorySeed,
-        sourceCategoriesById,
-        sourceWordsById
-      )
+      createCuratedCategory(categorySeed, sourceCategoriesById, sourceWordsById)
     ),
   }));
 }
@@ -1771,7 +1767,11 @@ const curatedPackageSeeds: readonly CuratedPackageSeed[] = [
         id: "challenge-travel",
         sourceCategoryId: "challenge-travel",
         label: ["Travel and transport", "Подорожі та транспорт"],
-        includeWordIds: ["modern-tech-28", "modern-tech-29", "mixed-learning-69"],
+        includeWordIds: [
+          "modern-tech-28",
+          "modern-tech-29",
+          "mixed-learning-69",
+        ],
       },
     ],
   },
