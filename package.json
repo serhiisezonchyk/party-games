@@ -54,7 +54,8 @@
     "fix": "ultracite fix",
     "test:alias": "node scripts/check-alias-content.cjs",
     "test:mafia": "node scripts/check-mafia-engine.cjs",
-    "test:spy": "node scripts/check-spy-content.cjs"
+    "test:spy": "node scripts/check-spy-content.cjs",
+    "test:truth-or-dare": "node scripts/check-truth-or-dare-content.cjs"
   },
   "version": "1.0.0",
   "main": "expo-router/entry",

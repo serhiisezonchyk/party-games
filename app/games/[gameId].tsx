@@ -12,6 +12,7 @@ import { AliasSetupScreen } from "@/features/alias/alias-setup-screen";
 import { GameRulesModal } from "@/features/game-rules-modal";
 import { MafiaSetupScreen } from "@/features/mafia/mafia-setup-screen";
 import { SpySetupScreen } from "@/features/spy/spy-setup-screen";
+import { TruthOrDareSetupScreen } from "@/features/truth-or-dare/truth-or-dare-setup-screen";
 
 export default function GameScreen() {
   const { gameId } = useLocalSearchParams<{ gameId?: string | string[] }>();
@@ -131,69 +132,33 @@ export default function GameScreen() {
     );
   }
 
-  return (
-    <SafeAreaView
-      edges={["bottom"]}
-      style={[styles.screen, { backgroundColor: palette.background }]}
-    >
-      <Stack.Screen
-        options={{
-          title: t(game.titleKey),
-          headerRight: () => (
-            <View style={styles.headerActions}>
-              <HeaderInfoButton onPress={() => setIsRulesVisible(true)} />
-              <HeaderSettingsButton />
-            </View>
-          ),
-        }}
-      />
-      <View style={styles.content}>
-        <View
-          style={[
-            styles.panel,
-            {
-              backgroundColor: palette.card,
-              borderColor: palette.border,
-            },
-          ]}
-        >
-          <Text style={[styles.eyebrow, { color: palette.tint }]}>
-            {t(game.playersKey)}
-          </Text>
-          <Text style={[styles.title, { color: palette.text }]}>
-            {t(game.titleKey)}
-          </Text>
-          <Text style={[styles.body, { color: palette.mutedText }]}>
-            {t(game.descriptionKey)}
-          </Text>
-        </View>
+  if (game.id === "truth-or-dare") {
+    return (
+      <>
+        <Stack.Screen
+          options={{
+            title: t(game.titleKey),
+            headerRight: () => (
+              <View style={styles.headerActions}>
+                <HeaderInfoButton onPress={() => setIsRulesVisible(true)} />
+                <HeaderSettingsButton />
+              </View>
+            ),
+          }}
+        />
+        <TruthOrDareSetupScreen />
+        <GameRulesModal
+          gameId={game.id}
+          onClose={() => setIsRulesVisible(false)}
+          palette={palette}
+          t={t}
+          visible={isRulesVisible}
+        />
+      </>
+    );
+  }
 
-        <View
-          style={[
-            styles.panel,
-            {
-              backgroundColor: palette.surface,
-              borderColor: palette.border,
-            },
-          ]}
-        >
-          <Text style={[styles.placeholderTitle, { color: palette.text }]}>
-            {t("game.placeholderTitle")}
-          </Text>
-          <Text style={[styles.body, { color: palette.mutedText }]}>
-            {t("game.placeholderBody")}
-          </Text>
-        </View>
-      </View>
-      <GameRulesModal
-        gameId={game.id}
-        onClose={() => setIsRulesVisible(false)}
-        palette={palette}
-        t={t}
-        visible={isRulesVisible}
-      />
-    </SafeAreaView>
-  );
+  return null;
 }
 
 const styles = StyleSheet.create({
@@ -214,12 +179,6 @@ const styles = StyleSheet.create({
     gap: 12,
     padding: 20,
   },
-  eyebrow: {
-    fontSize: 13,
-    fontWeight: "800",
-    letterSpacing: 0,
-    textTransform: "uppercase",
-  },
   title: {
     fontSize: 32,
     fontWeight: "800",
@@ -228,11 +187,6 @@ const styles = StyleSheet.create({
   body: {
     fontSize: 16,
     lineHeight: 24,
-  },
-  placeholderTitle: {
-    fontSize: 20,
-    fontWeight: "800",
-    lineHeight: 26,
   },
   link: {
     fontSize: 16,

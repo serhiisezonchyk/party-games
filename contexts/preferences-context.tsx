@@ -26,6 +26,7 @@ interface PreferencesContextValue {
   closeSettings: () => void;
   effectiveLanguage: Language;
   effectiveTheme: EffectiveTheme;
+  isPreferencesLoaded: boolean;
   isSettingsVisible: boolean;
   openSettings: () => void;
   preferences: AppPreferences;
@@ -51,6 +52,7 @@ export function PreferencesProvider({ children }: PropsWithChildren) {
   const systemTheme = useColorScheme();
   const [preferences, setPreferences] =
     useState<AppPreferences>(defaultPreferences);
+  const [isPreferencesLoaded, setIsPreferencesLoaded] = useState(false);
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
 
   useEffect(() => {
@@ -60,10 +62,14 @@ export function PreferencesProvider({ children }: PropsWithChildren) {
       .then((loadedPreferences) => {
         if (isMounted) {
           setPreferences(loadedPreferences);
+          setIsPreferencesLoaded(true);
         }
       })
       .catch((error: unknown) => {
         console.warn("Failed to load preferences", error);
+        if (isMounted) {
+          setIsPreferencesLoaded(true);
+        }
       });
 
     return () => {
@@ -123,6 +129,7 @@ export function PreferencesProvider({ children }: PropsWithChildren) {
       preferences,
       effectiveTheme,
       effectiveLanguage,
+      isPreferencesLoaded,
       isSettingsVisible,
       setThemeMode,
       setLanguageMode,
@@ -134,6 +141,7 @@ export function PreferencesProvider({ children }: PropsWithChildren) {
     [
       effectiveLanguage,
       effectiveTheme,
+      isPreferencesLoaded,
       isSettingsVisible,
       preferences,
       setDateOfBirthIso,

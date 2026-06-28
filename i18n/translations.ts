@@ -368,6 +368,69 @@ const en = {
   "spy.rules.timerTitle": "Timer",
   "spy.rules.timerBody":
     "When time runs out, the group should make a final accusation. If the spy avoids detection, the spy wins.",
+  "truthOrDare.setup.title": "Truth or Dare setup",
+  "truthOrDare.setup.subtitle":
+    "Add players, choose the vibe, and keep the next party round ready on this device.",
+  "truthOrDare.setup.ready": "Setup is ready.",
+  "truthOrDare.setup.needPlayers":
+    "Add at least 2 named participants to save setup.",
+  "truthOrDare.setup.needCategories": "Select at least one category.",
+  "truthOrDare.setup.save": "Save setup",
+  "truthOrDare.setup.saved": "Truth or Dare setup saved.",
+  "truthOrDare.start.button": "Start game",
+  "truthOrDare.start.ready": "Setup is ready for gameplay.",
+  "truthOrDare.start.needPlayers":
+    "Add at least 2 named participants to start.",
+  "truthOrDare.start.needCategories": "Select at least one category.",
+  "truthOrDare.participants.title": "Participants",
+  "truthOrDare.participants.help":
+    "Long press and drag to reorder. Players take turns in this order.",
+  "truthOrDare.settings.title": "Truth or Dare settings",
+  "truthOrDare.settings.categories": "Categories",
+  "truthOrDare.settings.categorySummary": "{count} selected",
+  "truthOrDare.settings.adultBadge": "18+",
+  "truthOrDare.settings.lockedHint":
+    "Set your date of birth in settings to unlock this local 18+ option.",
+  "truthOrDare.settings.adultUnlock": "Adult content unlock",
+  "truthOrDare.settings.adultUnlocked":
+    "18+ local content is unlocked on this device.",
+  "truthOrDare.settings.openSettingsHint":
+    "Tap to add your date of birth in settings.",
+  "truthOrDare.settings.alcoholMode": "Alcohol mode",
+  "truthOrDare.settings.alcoholModeHelp":
+    "Future tasks can show a drink penalty when someone skips a challenge.",
+  "truthOrDare.category.fun": "Fun",
+  "truthOrDare.category.funDescription":
+    "Light prompts for laughs and quick warmups.",
+  "truthOrDare.category.soft": "Soft",
+  "truthOrDare.category.softDescription":
+    "Easy personal questions and low-pressure dares.",
+  "truthOrDare.category.hot": "Hot",
+  "truthOrDare.category.hotDescription":
+    "Bolder party prompts without adult-only content.",
+  "truthOrDare.category.hard": "Hard",
+  "truthOrDare.category.hardDescription":
+    "Higher-stakes tasks for groups that want more pressure.",
+  "truthOrDare.category.extreme": "Extreme",
+  "truthOrDare.category.extremeDescription":
+    "Adult-gated dares for groups that explicitly unlock 18+ content.",
+  "truthOrDare.category.18plus": "18+",
+  "truthOrDare.category.18plusDescription":
+    "Adult-only questions and challenges for verified local 18+ play.",
+  "truthOrDare.game.noActive.title": "No active game",
+  "truthOrDare.game.noActive.body":
+    "Start a new game from setup to create players and prompt decks.",
+  "truthOrDare.game.noActive.back": "Back to setup",
+  "truthOrDare.game.currentPlayer": "Current player",
+  "truthOrDare.game.choosePrompt": "Choose truth or dare, then pass the phone.",
+  "truthOrDare.game.cardHidden": "Truth or Dare?",
+  "truthOrDare.game.truth": "Truth",
+  "truthOrDare.game.dare": "Dare",
+  "truthOrDare.game.rerollPrompt": "Change assignment",
+  "truthOrDare.game.nextPlayer": "Next player",
+  "truthOrDare.game.endGame": "End game",
+  "truthOrDare.game.penalty": "Penalty",
+  "truthOrDare.game.promptMissing": "This prompt is no longer available.",
   "games.spy.title": "Spy",
   "games.spy.description":
     "One player is the spy. Everyone else knows the location and tries to find them.",
@@ -762,6 +825,70 @@ const uk: Record<EnglishTranslationKey, string> = {
   "spy.rules.timerTitle": "Таймер",
   "spy.rules.timerBody":
     "Коли час вийшов, група має зробити фінальне звинувачення. Якщо шпигуна не викрили, він перемагає.",
+  "truthOrDare.setup.title": "Налаштування правди чи дії",
+  "truthOrDare.setup.subtitle":
+    "Додайте гравців, оберіть настрій і збережіть раунд на цьому пристрої.",
+  "truthOrDare.setup.ready": "Налаштування готове.",
+  "truthOrDare.setup.needPlayers":
+    "Додайте щонайменше 2 учасників з іменами, щоб зберегти.",
+  "truthOrDare.setup.needCategories": "Оберіть хоча б одну категорію.",
+  "truthOrDare.setup.save": "Зберегти",
+  "truthOrDare.setup.saved": "Налаштування правди чи дії збережено.",
+  "truthOrDare.start.button": "Почати гру",
+  "truthOrDare.start.ready": "Налаштування готове до гри.",
+  "truthOrDare.start.needPlayers":
+    "Додайте щонайменше 2 учасників з іменами, щоб почати.",
+  "truthOrDare.start.needCategories": "Оберіть хоча б одну категорію.",
+  "truthOrDare.participants.title": "Учасники",
+  "truthOrDare.participants.help":
+    "Затисніть і перетягніть, щоб змінити порядок. Гравці ходять у цьому порядку.",
+  "truthOrDare.settings.title": "Налаштування гри",
+  "truthOrDare.settings.categories": "Категорії",
+  "truthOrDare.settings.categorySummary": "Обрано: {count}",
+  "truthOrDare.settings.adultBadge": "18+",
+  "truthOrDare.settings.lockedHint":
+    "Вкажіть дату народження в налаштуваннях, щоб відкрити цю локальну опцію 18+.",
+  "truthOrDare.settings.adultUnlock": "Доступ до контенту 18+",
+  "truthOrDare.settings.adultUnlocked":
+    "Локальний контент 18+ відкрито на цьому пристрої.",
+  "truthOrDare.settings.openSettingsHint":
+    "Натисніть, щоб додати дату народження в налаштуваннях.",
+  "truthOrDare.settings.alcoholMode": "Алкорежим",
+  "truthOrDare.settings.alcoholModeHelp":
+    "Майбутні завдання зможуть показувати штрафний ковток, якщо хтось відмовиться.",
+  "truthOrDare.category.fun": "Веселі",
+  "truthOrDare.category.funDescription":
+    "Легкі завдання для сміху й швидкого розігріву.",
+  "truthOrDare.category.soft": "М'які",
+  "truthOrDare.category.softDescription":
+    "Прості особисті питання й ненапружені дії.",
+  "truthOrDare.category.hot": "Гарячі",
+  "truthOrDare.category.hotDescription":
+    "Сміливіші вечіркові завдання без контенту лише для дорослих.",
+  "truthOrDare.category.hard": "Складні",
+  "truthOrDare.category.hardDescription":
+    "Завдання з більшим тиском для компаній, які хочуть виклику.",
+  "truthOrDare.category.extreme": "Екстремальні",
+  "truthOrDare.category.extremeDescription":
+    "Дії з обмеженням 18+ для компаній, які явно відкрили дорослий контент.",
+  "truthOrDare.category.18plus": "18+",
+  "truthOrDare.category.18plusDescription":
+    "Питання й дії лише для дорослих у локальній грі з підтвердженням 18+.",
+  "truthOrDare.game.noActive.title": "Немає активної гри",
+  "truthOrDare.game.noActive.body":
+    "Почніть нову гру з налаштувань, щоб створити гравців і колоди завдань.",
+  "truthOrDare.game.noActive.back": "До налаштувань",
+  "truthOrDare.game.currentPlayer": "Поточний гравець",
+  "truthOrDare.game.choosePrompt":
+    "Оберіть правду або дію й передайте телефон.",
+  "truthOrDare.game.cardHidden": "Правда чи дія?",
+  "truthOrDare.game.truth": "Правда",
+  "truthOrDare.game.dare": "Дія",
+  "truthOrDare.game.rerollPrompt": "Змінити завдання",
+  "truthOrDare.game.nextPlayer": "Наступний гравець",
+  "truthOrDare.game.endGame": "Завершити гру",
+  "truthOrDare.game.penalty": "Штраф",
+  "truthOrDare.game.promptMissing": "Це завдання більше недоступне.",
   "games.spy.title": "Шпигун",
   "games.spy.description":
     "Один гравець є шпигуном. Інші знають локацію та намагаються його знайти.",

@@ -53,6 +53,29 @@ export function isDateOnlyIso(value: unknown): value is string {
   );
 }
 
+export function isAtLeastAge(dateOfBirthIso: string | undefined, age: number) {
+  if (!isDateOnlyIso(dateOfBirthIso)) {
+    return false;
+  }
+
+  const [year, month, day] = dateOfBirthIso.split("-").map(Number);
+  const today = new Date();
+  let currentAge = today.getFullYear() - year;
+  const hasBirthdayPassedThisYear =
+    today.getMonth() > month - 1 ||
+    (today.getMonth() === month - 1 && today.getDate() >= day);
+
+  if (!hasBirthdayPassedThisYear) {
+    currentAge -= 1;
+  }
+
+  return currentAge >= age;
+}
+
+export function isAdultDateOfBirth(dateOfBirthIso: string | undefined) {
+  return isAtLeastAge(dateOfBirthIso, 18);
+}
+
 export function parsePreferences(value: unknown): AppPreferences {
   if (!value) {
     return defaultPreferences;
