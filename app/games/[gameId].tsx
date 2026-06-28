@@ -11,6 +11,7 @@ import { getGameById } from "@/data/games";
 import { AliasSetupScreen } from "@/features/alias/alias-setup-screen";
 import { GameRulesModal } from "@/features/game-rules-modal";
 import { MafiaSetupScreen } from "@/features/mafia/mafia-setup-screen";
+import { NeverHaveIEverSetupScreen } from "@/features/never-have-i-ever/never-have-i-ever-setup-screen";
 import { SpySetupScreen } from "@/features/spy/spy-setup-screen";
 import { TruthOrDareSetupScreen } from "@/features/truth-or-dare/truth-or-dare-setup-screen";
 
@@ -147,6 +148,32 @@ export default function GameScreen() {
           }}
         />
         <TruthOrDareSetupScreen />
+        <GameRulesModal
+          gameId={game.id}
+          onClose={() => setIsRulesVisible(false)}
+          palette={palette}
+          t={t}
+          visible={isRulesVisible}
+        />
+      </>
+    );
+  }
+
+  if (game.id === "never-have-i-ever") {
+    return (
+      <>
+        <Stack.Screen
+          options={{
+            title: t(game.titleKey),
+            headerRight: () => (
+              <View style={styles.headerActions}>
+                <HeaderInfoButton onPress={() => setIsRulesVisible(true)} />
+                <HeaderSettingsButton />
+              </View>
+            ),
+          }}
+        />
+        <NeverHaveIEverSetupScreen />
         <GameRulesModal
           gameId={game.id}
           onClose={() => setIsRulesVisible(false)}

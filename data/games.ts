@@ -1,6 +1,11 @@
 import type { TranslationKey } from "@/i18n/translations";
 
-export type GameId = "spy" | "mafia" | "alias" | "truth-or-dare";
+export type GameId =
+  | "spy"
+  | "mafia"
+  | "alias"
+  | "truth-or-dare"
+  | "never-have-i-ever";
 
 export interface GameDefinition {
   descriptionKey: TranslationKey;
@@ -33,6 +38,12 @@ export const games = [
     titleKey: "games.truthOrDare.title",
     descriptionKey: "games.truthOrDare.description",
     playersKey: "games.truthOrDare.players",
+  },
+  {
+    id: "never-have-i-ever",
+    titleKey: "games.neverHaveIEver.title",
+    descriptionKey: "games.neverHaveIEver.description",
+    playersKey: "games.neverHaveIEver.players",
   },
 ] as const satisfies readonly GameDefinition[];
 

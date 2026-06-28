@@ -15,6 +15,9 @@ export const storageKeys = {
   aliasActiveGame: "party-games.alias.activeGame.v1",
   truthOrDareCurrentSettings: "party-games.truthOrDare.currentSettings.v1",
   truthOrDareActiveGame: "party-games.truthOrDare.activeGame.v1",
+  neverHaveIEverCurrentSettings:
+    "party-games.neverHaveIEver.currentSettings.v1",
+  neverHaveIEverActiveGame: "party-games.neverHaveIEver.activeGame.v1",
 } as const;
 
 export type StorageKey = (typeof storageKeys)[keyof typeof storageKeys];

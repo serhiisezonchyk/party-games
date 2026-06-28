@@ -26,6 +26,10 @@ const gameVisuals = {
     color: "#EC4899",
     icon: "help",
   },
+  "never-have-i-ever": {
+    color: "#EF4444",
+    icon: "local-bar",
+  },
 } as const;
 
 const titleFontFamily = "Montserrat";

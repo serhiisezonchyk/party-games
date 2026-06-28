@@ -431,6 +431,67 @@ const en = {
   "truthOrDare.game.endGame": "End game",
   "truthOrDare.game.penalty": "Penalty",
   "truthOrDare.game.promptMissing": "This prompt is no longer available.",
+  "neverHaveIEver.setup.title": "Never Have I Ever setup",
+  "neverHaveIEver.setup.subtitle":
+    "Add players, choose question packs, and start a quick reveal round.",
+  "neverHaveIEver.start.button": "Start game",
+  "neverHaveIEver.start.ready": "Setup is ready for gameplay.",
+  "neverHaveIEver.start.needPlayers":
+    "Add at least 2 named participants to start.",
+  "neverHaveIEver.start.needCategories": "Select at least one question pack.",
+  "neverHaveIEver.participants.title": "Participants",
+  "neverHaveIEver.participants.help":
+    "Long press and drag to reorder. Players take turns in this order.",
+  "neverHaveIEver.settings.title": "Never Have I Ever settings",
+  "neverHaveIEver.settings.categories": "Question packs",
+  "neverHaveIEver.settings.categorySummary": "{count} selected",
+  "neverHaveIEver.settings.adultBadge": "18+",
+  "neverHaveIEver.settings.lockedHint":
+    "Set your date of birth in settings to unlock this local 18+ option.",
+  "neverHaveIEver.settings.adultUnlock": "Adult content unlock",
+  "neverHaveIEver.settings.adultUnlocked":
+    "18+ local content is unlocked on this device.",
+  "neverHaveIEver.settings.openSettingsHint":
+    "Tap to add your date of birth in settings.",
+  "neverHaveIEver.settings.alcoholMode": "Alcohol mode",
+  "neverHaveIEver.settings.alcoholModeHelp":
+    "Adds a random 1 to 5 sip instruction for everyone who has done the card.",
+  "neverHaveIEver.category.lite": "Lite",
+  "neverHaveIEver.category.liteDescription":
+    "General, funny, chill prompts for any group.",
+  "neverHaveIEver.category.medium": "Bold",
+  "neverHaveIEver.category.mediumDescription":
+    "More provocative social questions without adult-only content.",
+  "neverHaveIEver.category.adult": "After Dark",
+  "neverHaveIEver.category.adultDescription":
+    "Bolder adult prompts for groups that explicitly unlock 18+ content.",
+  "neverHaveIEver.game.noActive.title": "No active game",
+  "neverHaveIEver.game.noActive.body":
+    "Start a new game from setup to create players and a prompt deck.",
+  "neverHaveIEver.game.noActive.back": "Back to setup",
+  "neverHaveIEver.game.currentPlayer": "Current player",
+  "neverHaveIEver.game.cardHelp":
+    "Read the card aloud. Everyone who has done it answers honestly.",
+  "neverHaveIEver.game.cardLabel": "I have never...",
+  "neverHaveIEver.game.nextPlayer": "Next player",
+  "neverHaveIEver.game.endGame": "End game",
+  "neverHaveIEver.game.alcoholLabel": "Alcohol mode",
+  "neverHaveIEver.game.alcoholInstruction":
+    "Who has done this: take {sips}.",
+  "neverHaveIEver.game.sip.one": "{count} sip",
+  "neverHaveIEver.game.sip.few": "{count} sips",
+  "neverHaveIEver.game.sip.many": "{count} sips",
+  "neverHaveIEver.game.promptMissing":
+    "This question is no longer available.",
+  "neverHaveIEver.rules.goalTitle": "Goal",
+  "neverHaveIEver.rules.goalBody":
+    "Players take turns reading “I have never...” cards. Anyone who has done the thing on the card admits it.",
+  "neverHaveIEver.rules.setupTitle": "Question packs",
+  "neverHaveIEver.rules.setupBody":
+    "Lite is relaxed, Bold is more provocative, and After Dark is local 18+ content unlocked through settings.",
+  "neverHaveIEver.rules.alcoholTitle": "Alcohol mode",
+  "neverHaveIEver.rules.alcoholBody":
+    "When alcohol mode is enabled, everyone who has done the card follows the shown sip instruction. Keep it optional and comfortable for the group.",
   "games.spy.title": "Spy",
   "games.spy.description":
     "One player is the spy. Everyone else knows the location and tries to find them.",
@@ -447,6 +508,10 @@ const en = {
   "games.truthOrDare.description":
     "Take turns choosing a question or a challenge from the local deck.",
   "games.truthOrDare.players": "2+ players",
+  "games.neverHaveIEver.title": "Never Have I Ever",
+  "games.neverHaveIEver.description":
+    "Read cards, reveal who has done it, and optionally add sip penalties.",
+  "games.neverHaveIEver.players": "2+ players",
 } as const;
 
 type EnglishTranslationKey = keyof typeof en;
@@ -889,6 +954,66 @@ const uk: Record<EnglishTranslationKey, string> = {
   "truthOrDare.game.endGame": "Завершити гру",
   "truthOrDare.game.penalty": "Штраф",
   "truthOrDare.game.promptMissing": "Це завдання більше недоступне.",
+  "neverHaveIEver.setup.title": "Налаштування «Я ніколи не...»",
+  "neverHaveIEver.setup.subtitle":
+    "Додайте гравців, оберіть набори питань і швидко починайте раунд.",
+  "neverHaveIEver.start.button": "Почати гру",
+  "neverHaveIEver.start.ready": "Налаштування готове до гри.",
+  "neverHaveIEver.start.needPlayers":
+    "Додайте щонайменше 2 учасників з іменами, щоб почати.",
+  "neverHaveIEver.start.needCategories": "Оберіть хоча б один набір питань.",
+  "neverHaveIEver.participants.title": "Учасники",
+  "neverHaveIEver.participants.help":
+    "Затисніть і перетягніть, щоб змінити порядок. Гравці ходять у цьому порядку.",
+  "neverHaveIEver.settings.title": "Налаштування гри",
+  "neverHaveIEver.settings.categories": "Набори питань",
+  "neverHaveIEver.settings.categorySummary": "Обрано: {count}",
+  "neverHaveIEver.settings.adultBadge": "18+",
+  "neverHaveIEver.settings.lockedHint":
+    "Вкажіть дату народження в налаштуваннях, щоб відкрити цю локальну опцію 18+.",
+  "neverHaveIEver.settings.adultUnlock": "Доступ до контенту 18+",
+  "neverHaveIEver.settings.adultUnlocked":
+    "Локальний контент 18+ відкрито на цьому пристрої.",
+  "neverHaveIEver.settings.openSettingsHint":
+    "Натисніть, щоб додати дату народження в налаштуваннях.",
+  "neverHaveIEver.settings.alcoholMode": "Алкорежим",
+  "neverHaveIEver.settings.alcoholModeHelp":
+    "Додає випадкову інструкцію від 1 до 5 ковтків для всіх, хто це робив.",
+  "neverHaveIEver.category.lite": "Легкі",
+  "neverHaveIEver.category.liteDescription":
+    "Загальні, смішні й спокійні питання для будь-якої компанії.",
+  "neverHaveIEver.category.medium": "Сміливі",
+  "neverHaveIEver.category.mediumDescription":
+    "Провокативніші соціальні питання без контенту лише для дорослих.",
+  "neverHaveIEver.category.adult": "Після опівночі",
+  "neverHaveIEver.category.adultDescription":
+    "Сміливіші дорослі питання для компаній, які явно відкрили контент 18+.",
+  "neverHaveIEver.game.noActive.title": "Немає активної гри",
+  "neverHaveIEver.game.noActive.body":
+    "Почніть нову гру з налаштувань, щоб створити гравців і колоду питань.",
+  "neverHaveIEver.game.noActive.back": "До налаштувань",
+  "neverHaveIEver.game.currentPlayer": "Поточний гравець",
+  "neverHaveIEver.game.cardHelp":
+    "Прочитайте картку вголос. Усі, хто це робив, чесно відповідають.",
+  "neverHaveIEver.game.cardLabel": "Я ніколи не...",
+  "neverHaveIEver.game.nextPlayer": "Наступний гравець",
+  "neverHaveIEver.game.endGame": "Завершити гру",
+  "neverHaveIEver.game.alcoholLabel": "Алкорежим",
+  "neverHaveIEver.game.alcoholInstruction":
+    "Хто це робив: зробіть {sips}.",
+  "neverHaveIEver.game.sip.one": "{count} ковток",
+  "neverHaveIEver.game.sip.few": "{count} ковтки",
+  "neverHaveIEver.game.sip.many": "{count} ковтків",
+  "neverHaveIEver.game.promptMissing": "Це питання більше недоступне.",
+  "neverHaveIEver.rules.goalTitle": "Мета",
+  "neverHaveIEver.rules.goalBody":
+    "Гравці по черзі читають картки «Я ніколи не...». Кожен, хто робив те, що написано на картці, зізнається.",
+  "neverHaveIEver.rules.setupTitle": "Набори питань",
+  "neverHaveIEver.rules.setupBody":
+    "Легкі — спокійні, Сміливі — провокативніші, а Після опівночі — локальний контент 18+, який відкривається через налаштування.",
+  "neverHaveIEver.rules.alcoholTitle": "Алкорежим",
+  "neverHaveIEver.rules.alcoholBody":
+    "Коли алкорежим увімкнено, усі, хто робив написане на картці, виконують показану інструкцію з ковтками. Нехай це залишається добровільним і комфортним для компанії.",
   "games.spy.title": "Шпигун",
   "games.spy.description":
     "Один гравець є шпигуном. Інші знають локацію та намагаються його знайти.",
@@ -905,6 +1030,10 @@ const uk: Record<EnglishTranslationKey, string> = {
   "games.truthOrDare.description":
     "По черзі обирайте питання або завдання з локальної колоди.",
   "games.truthOrDare.players": "2+ гравці",
+  "games.neverHaveIEver.title": "Я ніколи не...",
+  "games.neverHaveIEver.description":
+    "Читайте картки, дізнавайтеся, хто це робив, і за бажанням додавайте ковтки.",
+  "games.neverHaveIEver.players": "2+ гравці",
 };
 
 export const translations = {

@@ -57,6 +57,20 @@ const gameRuleSections: Record<GameId, RulesSection[]> = {
   "truth-or-dare": [
     { titleKey: "game.rules.soonTitle", bodyKey: "game.rules.soonBody" },
   ],
+  "never-have-i-ever": [
+    {
+      titleKey: "neverHaveIEver.rules.goalTitle",
+      bodyKey: "neverHaveIEver.rules.goalBody",
+    },
+    {
+      titleKey: "neverHaveIEver.rules.setupTitle",
+      bodyKey: "neverHaveIEver.rules.setupBody",
+    },
+    {
+      titleKey: "neverHaveIEver.rules.alcoholTitle",
+      bodyKey: "neverHaveIEver.rules.alcoholBody",
+    },
+  ],
 };
 
 interface GameRulesModalProps {
