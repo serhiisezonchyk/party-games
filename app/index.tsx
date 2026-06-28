@@ -2,10 +2,12 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { BlurView } from "expo-blur";
 import { Stack, useRouter } from "expo-router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Easing,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -47,6 +49,7 @@ const gameVisuals = {
 } as const;
 
 const titleFontFamily = "Montserrat";
+const homeHeaderTitleScrollY = 190;
 
 const confetti = [
   {
@@ -508,6 +511,8 @@ export default function HomeScreen() {
   const router = useRouter();
   const { effectiveTheme, t } = usePreferences();
   const homePalette = getHomePalette(effectiveTheme);
+  const [isHeaderTitleVisible, setIsHeaderTitleVisible] = useState(false);
+  const isHeaderTitleVisibleRef = useRef(false);
 
   function openGame(gameId: GameId) {
     router.push({
@@ -519,6 +524,18 @@ export default function HomeScreen() {
   function openRandomGame() {
     const randomGame = games[Math.floor(Math.random() * games.length)];
     openGame(randomGame.id);
+  }
+
+  function handleScroll(event: NativeSyntheticEvent<NativeScrollEvent>) {
+    const shouldShowTitle =
+      event.nativeEvent.contentOffset.y >= homeHeaderTitleScrollY;
+
+    if (shouldShowTitle === isHeaderTitleVisibleRef.current) {
+      return;
+    }
+
+    isHeaderTitleVisibleRef.current = shouldShowTitle;
+    setIsHeaderTitleVisible(shouldShowTitle);
   }
 
   return (
@@ -534,15 +551,23 @@ export default function HomeScreen() {
               iconColor={homePalette.text}
             />
           ),
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontFamily: titleFontFamily,
+            fontSize: 17,
+            fontWeight: "800",
+          },
           headerStyle: { backgroundColor: homePalette.background },
           headerShown: true,
           headerTintColor: homePalette.text,
-          title: "",
+          title: isHeaderTitleVisible ? t("app.name") : "",
         }}
       />
       <ParticleBackground theme={effectiveTheme} />
       <ScrollView
         contentContainerStyle={styles.content}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         style={styles.scrollArea}
       >
