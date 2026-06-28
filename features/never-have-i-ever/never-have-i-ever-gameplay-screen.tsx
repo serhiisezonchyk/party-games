@@ -44,9 +44,7 @@ function getSipText({
   }
 
   return t(
-    count === 1
-      ? "neverHaveIEver.game.sip.one"
-      : "neverHaveIEver.game.sip.many"
+    count === 1 ? "neverHaveIEver.game.sip.one" : "neverHaveIEver.game.sip.many"
   ).replace("{count}", String(count));
 }
 

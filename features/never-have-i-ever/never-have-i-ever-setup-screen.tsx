@@ -20,12 +20,12 @@ import {
   createNeverHaveIEverActiveGame,
   revealNeverHaveIEverPrompt,
 } from "@/features/never-have-i-ever/game-engine";
+import { NeverHaveIEverSettingsPanel } from "@/features/never-have-i-ever/never-have-i-ever-settings-panel";
 import {
   loadNeverHaveIEverSettings,
   saveActiveNeverHaveIEverGame,
   saveNeverHaveIEverSettings,
 } from "@/features/never-have-i-ever/storage";
-import { NeverHaveIEverSettingsPanel } from "@/features/never-have-i-ever/never-have-i-ever-settings-panel";
 import type { NeverHaveIEverSettings } from "@/features/never-have-i-ever/types";
 import {
   loadParticipants,

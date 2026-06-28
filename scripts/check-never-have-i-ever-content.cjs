@@ -65,6 +65,9 @@ const expectedPromptCounts = {
   lite: 145,
   medium: 145,
 };
+const cyrillicTextPattern = /[А-Яа-яЁёІіЇїЄєҐґ]/;
+const ukrainianTextPattern = /[А-Яа-яІіЇїЄєҐґ]/;
+const russianNeverPromptPattern = /^(я|никогда|меня|мне|у меня)\s+никогда/i;
 
 function assertLocalizedText(value, label) {
   assert.equal(typeof value.en, "string", `${label}.en must be a string`);
@@ -105,7 +108,10 @@ function testIdsAndLookups() {
 }
 
 function normalizePromptText(value) {
-  return value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 }
 
 function testNoDuplicatePromptText() {
@@ -134,11 +140,11 @@ function testTextCompleteness() {
       `${prompt.id} must have separate English and Ukrainian text`
     );
     assert.ok(
-      !/[А-Яа-яЁёІіЇїЄєҐґ]/.test(prompt.text.en),
+      !cyrillicTextPattern.test(prompt.text.en),
       `${prompt.id}.en must be English text`
     );
     assert.ok(
-      /[А-Яа-яІіЇїЄєҐґ]/.test(prompt.text.uk),
+      ukrainianTextPattern.test(prompt.text.uk),
       `${prompt.id}.uk must be Ukrainian text`
     );
     assert.ok(
@@ -150,7 +156,7 @@ function testTextCompleteness() {
       `${prompt.id} should store only card completion text in Ukrainian`
     );
     assert.ok(
-      !/^(я|никогда|меня|мне|у меня)\s+никогда/i.test(prompt.text.en),
+      !russianNeverPromptPattern.test(prompt.text.en),
       `${prompt.id} should store only card completion text`
     );
   }
@@ -188,8 +194,14 @@ function testGameEngine() {
   assert.ok(nextPlayerGame.currentCard);
   assert.equal(nextPlayerGame.currentCard.sipCount, 5);
 
-  assert.equal(getNeverHaveIEverSipCount(() => 0), 1);
-  assert.equal(getNeverHaveIEverSipCount(() => 0.999), 5);
+  assert.equal(
+    getNeverHaveIEverSipCount(() => 0),
+    1
+  );
+  assert.equal(
+    getNeverHaveIEverSipCount(() => 0.999),
+    5
+  );
 }
 
 testContentCompleteness();

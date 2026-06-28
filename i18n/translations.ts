@@ -476,13 +476,11 @@ const en = {
   "neverHaveIEver.game.nextPlayer": "Next player",
   "neverHaveIEver.game.endGame": "End game",
   "neverHaveIEver.game.alcoholLabel": "Alcohol mode",
-  "neverHaveIEver.game.alcoholInstruction":
-    "Who has done this: take {sips}.",
+  "neverHaveIEver.game.alcoholInstruction": "Who has done this: take {sips}.",
   "neverHaveIEver.game.sip.one": "{count} sip",
   "neverHaveIEver.game.sip.few": "{count} sips",
   "neverHaveIEver.game.sip.many": "{count} sips",
-  "neverHaveIEver.game.promptMissing":
-    "This question is no longer available.",
+  "neverHaveIEver.game.promptMissing": "This question is no longer available.",
   "neverHaveIEver.rules.goalTitle": "Goal",
   "neverHaveIEver.rules.goalBody":
     "Players take turns reading “I have never...” cards. Anyone who has done the thing on the card admits it.",
@@ -999,8 +997,7 @@ const uk: Record<EnglishTranslationKey, string> = {
   "neverHaveIEver.game.nextPlayer": "Наступний гравець",
   "neverHaveIEver.game.endGame": "Завершити гру",
   "neverHaveIEver.game.alcoholLabel": "Алкорежим",
-  "neverHaveIEver.game.alcoholInstruction":
-    "Хто це робив: зробіть {sips}.",
+  "neverHaveIEver.game.alcoholInstruction": "Хто це робив: зробіть {sips}.",
   "neverHaveIEver.game.sip.one": "{count} ковток",
   "neverHaveIEver.game.sip.few": "{count} ковтки",
   "neverHaveIEver.game.sip.many": "{count} ковтків",

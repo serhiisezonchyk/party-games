@@ -47,10 +47,7 @@ export function createNeverHaveIEverParticipant(name = ""): Participant {
 }
 
 export function createDefaultNeverHaveIEverParticipants() {
-  return [
-    createNeverHaveIEverParticipant(),
-    createNeverHaveIEverParticipant(),
-  ];
+  return [createNeverHaveIEverParticipant(), createNeverHaveIEverParticipant()];
 }
 
 export function getNamedNeverHaveIEverParticipants(
