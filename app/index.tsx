@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Easing,
+  type LayoutChangeEvent,
   type NativeScrollEvent,
   type NativeSyntheticEvent,
   Pressable,
@@ -50,6 +51,11 @@ const gameVisuals = {
 
 const titleFontFamily = "Montserrat";
 const homeHeaderTitleScrollY = 190;
+const introLogoTargetCenterY = 164;
+const introBlankDuration = 260;
+const introLogoMoveDuration = 380;
+const introPartyBounceDuration = 430;
+const introGamesBounceDuration = 500;
 
 const confetti = [
   {
@@ -512,7 +518,78 @@ export default function HomeScreen() {
   const { effectiveTheme, t } = usePreferences();
   const homePalette = getHomePalette(effectiveTheme);
   const [isHeaderTitleVisible, setIsHeaderTitleVisible] = useState(false);
+  const [shouldRenderIntro, setShouldRenderIntro] = useState(true);
+  const [introScreenHeight, setIntroScreenHeight] = useState(0);
   const isHeaderTitleVisibleRef = useRef(false);
+  const introProgress = useRef(new Animated.Value(0)).current;
+  const introPartyProgress = useRef(new Animated.Value(0)).current;
+  const introGamesProgress = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (!shouldRenderIntro || introScreenHeight <= 0) {
+      return;
+    }
+
+    introProgress.setValue(0);
+    introPartyProgress.setValue(0);
+    introGamesProgress.setValue(0);
+    const animation = Animated.sequence([
+      Animated.delay(introBlankDuration),
+      Animated.timing(introPartyProgress, {
+        duration: introPartyBounceDuration,
+        easing: Easing.out(Easing.cubic),
+        isInteraction: false,
+        toValue: 1,
+        useNativeDriver: true,
+      }),
+      Animated.timing(introGamesProgress, {
+        duration: introGamesBounceDuration,
+        easing: Easing.out(Easing.cubic),
+        isInteraction: false,
+        toValue: 1,
+        useNativeDriver: true,
+      }),
+      Animated.delay(90),
+      Animated.timing(introProgress, {
+        duration: introLogoMoveDuration,
+        easing: Easing.out(Easing.cubic),
+        isInteraction: false,
+        toValue: 1,
+        useNativeDriver: true,
+      }),
+    ]);
+    const finishIntro = () => {
+      setShouldRenderIntro(false);
+    };
+    const fallbackTimer = setTimeout(
+      finishIntro,
+      introBlankDuration +
+        introPartyBounceDuration +
+        introGamesBounceDuration +
+        introLogoMoveDuration +
+        500
+    );
+
+    animation.start(({ finished }) => {
+      if (!finished) {
+        return;
+      }
+
+      clearTimeout(fallbackTimer);
+      finishIntro();
+    });
+
+    return () => {
+      clearTimeout(fallbackTimer);
+      animation.stop();
+    };
+  }, [
+    introGamesProgress,
+    introPartyProgress,
+    introProgress,
+    introScreenHeight,
+    shouldRenderIntro,
+  ]);
 
   function openGame(gameId: GameId) {
     router.push({
@@ -538,6 +615,51 @@ export default function HomeScreen() {
     setIsHeaderTitleVisible(shouldShowTitle);
   }
 
+  function handleIntroLayout(event: LayoutChangeEvent) {
+    const nextHeight = event.nativeEvent.layout.height;
+
+    setIntroScreenHeight((currentHeight) =>
+      currentHeight === nextHeight ? currentHeight : nextHeight
+    );
+  }
+
+  const introTranslateY = introProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, introLogoTargetCenterY - introScreenHeight / 2],
+  });
+  const introScale = introProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1.08, 1],
+  });
+  const introBackdropOpacity = introProgress.interpolate({
+    inputRange: [0, 0.65, 1],
+    outputRange: [1, 0.9, 0],
+  });
+  const introPartyOpacity = introPartyProgress.interpolate({
+    inputRange: [0, 0.12, 1],
+    outputRange: [0, 1, 1],
+  });
+  const introPartyScale = introPartyProgress.interpolate({
+    inputRange: [0, 0.52, 0.78, 1],
+    outputRange: [0.2, 1.26, 0.94, 1],
+  });
+  const introPartyTranslateY = introPartyProgress.interpolate({
+    inputRange: [0, 0.52, 0.78, 1],
+    outputRange: [78, -18, 6, 0],
+  });
+  const introGamesOpacity = introGamesProgress.interpolate({
+    inputRange: [0, 0.12, 1],
+    outputRange: [0, 1, 1],
+  });
+  const introGamesScale = introGamesProgress.interpolate({
+    inputRange: [0, 0.52, 0.78, 1],
+    outputRange: [0.2, 1.24, 0.94, 1],
+  });
+  const introGamesTranslateY = introGamesProgress.interpolate({
+    inputRange: [0, 0.52, 0.78, 1],
+    outputRange: [180, -22, 8, 0],
+  });
+
   return (
     <SafeAreaView
       edges={["bottom"]}
@@ -545,12 +667,14 @@ export default function HomeScreen() {
     >
       <Stack.Screen
         options={{
-          headerRight: () => (
-            <HeaderSettingsButton
-              backgroundColor={homePalette.background}
-              iconColor={homePalette.text}
-            />
-          ),
+          headerRight: shouldRenderIntro
+            ? undefined
+            : () => (
+                <HeaderSettingsButton
+                  backgroundColor={homePalette.background}
+                  iconColor={homePalette.text}
+                />
+              ),
           headerTitleAlign: "center",
           headerTitleStyle: {
             fontFamily: titleFontFamily,
@@ -572,13 +696,43 @@ export default function HomeScreen() {
         style={styles.scrollArea}
       >
         <View style={styles.hero}>
-          <HeaderConfetti />
+          {/* <HeaderConfetti /> */}
 
-          <View style={styles.brand}>
-            <Text style={[styles.titleTop, { color: homePalette.title }]}>
+          <View
+            style={[
+              styles.brand,
+              shouldRenderIntro ? styles.brandHidden : null,
+            ]}
+          >
+            <Animated.Text
+              style={[
+                styles.titleTop,
+                {
+                  color: homePalette.title,
+                  opacity: introPartyOpacity,
+                  transform: [
+                    { translateY: introPartyTranslateY },
+                    { scale: introPartyScale },
+                  ],
+                },
+              ]}
+            >
               PARTY
-            </Text>
-            <Text style={styles.titleBottom}>GAMES</Text>
+            </Animated.Text>
+            <Animated.Text
+              style={[
+                styles.titleBottom,
+                {
+                  opacity: introGamesOpacity,
+                  transform: [
+                    { translateY: introGamesTranslateY },
+                    { scale: introGamesScale },
+                  ],
+                },
+              ]}
+            >
+              GAMES
+            </Animated.Text>
             <Text style={[styles.subtitle, { color: homePalette.muted }]}>
               {t("home.subtitle")}
             </Text>
@@ -761,6 +915,65 @@ export default function HomeScreen() {
           </View>
         </Pressable>
       </ScrollView>
+
+      {shouldRenderIntro ? (
+        <View
+          onLayout={handleIntroLayout}
+          pointerEvents="auto"
+          style={styles.introOverlay}
+        >
+          <Animated.View
+            style={[
+              styles.introBackdrop,
+              {
+                backgroundColor: homePalette.background,
+                opacity: introBackdropOpacity,
+              },
+            ]}
+          />
+          <Animated.View
+            style={[
+              styles.introLogo,
+              {
+                transform: [
+                  { translateY: introTranslateY },
+                  { scale: introScale },
+                ],
+              },
+            ]}
+          >
+            <Animated.Text
+              style={[
+                styles.titleTop,
+                {
+                  color: homePalette.title,
+                  opacity: introPartyOpacity,
+                  transform: [
+                    { translateY: introPartyTranslateY },
+                    { scale: introPartyScale },
+                  ],
+                },
+              ]}
+            >
+              PARTY
+            </Animated.Text>
+            <Animated.Text
+              style={[
+                styles.titleBottom,
+                {
+                  opacity: introGamesOpacity,
+                  transform: [
+                    { translateY: introGamesTranslateY },
+                    { scale: introGamesScale },
+                  ],
+                },
+              ]}
+            >
+              GAMES
+            </Animated.Text>
+          </Animated.View>
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 }
@@ -798,6 +1011,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 2,
     paddingTop: 58,
+  },
+  brandHidden: {
+    opacity: 0,
+  },
+  introOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 20,
+  },
+  introBackdrop: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  introLogo: {
+    alignItems: "center",
+    gap: 2,
   },
   titleTop: {
     fontFamily: titleFontFamily,
