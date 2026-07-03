@@ -20,6 +20,14 @@ export function TelegramMiniAppBridge() {
 
     webApp.ready();
     webApp.expand();
+
+    if (webApp.isVersionAtLeast("8.0")) {
+      webApp.requestFullscreen?.();
+    }
+
+    if (webApp.isVersionAtLeast("7.7")) {
+      webApp.disableVerticalSwipes?.();
+    }
   }, []);
 
   useEffect(() => {

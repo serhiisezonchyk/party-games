@@ -39,6 +39,7 @@ export interface TelegramWebAppInitData {
 
 export interface TelegramWebApp {
   colorScheme: TelegramColorScheme;
+  disableVerticalSwipes?: () => void;
   expand: () => void;
   initData: string;
   initDataUnsafe: TelegramWebAppInitData;
@@ -47,6 +48,7 @@ export interface TelegramWebApp {
   onEvent: (eventType: TelegramEventName, eventHandler: () => void) => void;
   platform: string;
   ready: () => void;
+  requestFullscreen?: () => void;
   setBackgroundColor?: (color: string) => void;
   setBottomBarColor?: (color: string) => void;
   setHeaderColor?: (color: string) => void;

@@ -7,7 +7,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
@@ -22,8 +22,14 @@ import {
   PreferencesProvider,
   usePreferences,
 } from "@/contexts/preferences-context";
+import {
+  getTelegramWebApp,
+  isTelegramMiniApp,
+} from "@/utils/telegram-mini-app";
 
 preventAutoHideAsync().catch(() => undefined);
+
+const TELEGRAM_HEADER_RIGHT_RESERVED_WIDTH = 72;
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -53,6 +59,11 @@ function RootNavigator() {
   const { effectiveTheme, t } = usePreferences();
   const palette = Colors[effectiveTheme];
   const navigationTheme = effectiveTheme === "dark" ? DarkTheme : DefaultTheme;
+  const [isTelegramRuntime, setIsTelegramRuntime] = useState(false);
+
+  useEffect(() => {
+    setIsTelegramRuntime(isTelegramMiniApp(getTelegramWebApp()));
+  }, []);
 
   return (
     <ThemeProvider
@@ -74,6 +85,9 @@ function RootNavigator() {
             screenOptions={{
               contentStyle: { backgroundColor: palette.background },
               headerRight: () => <HeaderSettingsButton />,
+              headerRightContainerStyle: isTelegramRuntime
+                ? styles.telegramHeaderRightContainer
+                : undefined,
               headerShadowVisible: false,
               headerStyle: { backgroundColor: palette.background },
               headerTintColor: palette.text,
@@ -110,5 +124,8 @@ const styles = StyleSheet.create({
           width: "100%",
         }
       : null),
+  },
+  telegramHeaderRightContainer: {
+    paddingRight: TELEGRAM_HEADER_RIGHT_RESERVED_WIDTH,
   },
 });
