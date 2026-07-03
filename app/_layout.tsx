@@ -29,7 +29,7 @@ import {
 
 preventAutoHideAsync().catch(() => undefined);
 
-const TELEGRAM_HEADER_RIGHT_RESERVED_WIDTH = 72;
+const TELEGRAM_FULLSCREEN_TOP_INSET = 116;
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -79,15 +79,20 @@ function RootNavigator() {
         },
       }}
     >
-      <View style={[styles.appRoot, { backgroundColor: palette.background }]}>
+      <View
+        style={[
+          styles.appRoot,
+          {
+            backgroundColor: palette.background,
+            paddingTop: isTelegramRuntime ? TELEGRAM_FULLSCREEN_TOP_INSET : 0,
+          },
+        ]}
+      >
         <View style={styles.appShell}>
           <Stack
             screenOptions={{
               contentStyle: { backgroundColor: palette.background },
               headerRight: () => <HeaderSettingsButton />,
-              headerRightContainerStyle: isTelegramRuntime
-                ? styles.telegramHeaderRightContainer
-                : undefined,
               headerShadowVisible: false,
               headerStyle: { backgroundColor: palette.background },
               headerTintColor: palette.text,
@@ -124,8 +129,5 @@ const styles = StyleSheet.create({
           width: "100%",
         }
       : null),
-  },
-  telegramHeaderRightContainer: {
-    paddingRight: TELEGRAM_HEADER_RIGHT_RESERVED_WIDTH,
   },
 });
