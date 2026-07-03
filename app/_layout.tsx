@@ -14,6 +14,7 @@ import "../global.css";
 
 import { HeaderSettingsButton } from "@/components/header-settings-button";
 import { PreferencesModal } from "@/components/preferences-modal";
+import { TelegramMiniAppBridge } from "@/components/telegram-mini-app-bridge";
 import { Colors } from "@/constants/theme";
 import {
   PreferencesProvider,
@@ -84,6 +85,7 @@ function RootNavigator() {
         />
       </Stack>
       <StatusBar style={effectiveTheme === "dark" ? "light" : "dark"} />
+      <TelegramMiniAppBridge />
       <PreferencesModal />
     </ThemeProvider>
   );
