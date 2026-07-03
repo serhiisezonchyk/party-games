@@ -29,7 +29,7 @@ import {
 
 preventAutoHideAsync().catch(() => undefined);
 
-const TELEGRAM_FULLSCREEN_TOP_INSET = 78;
+const TELEGRAM_FULLSCREEN_TOP_INSET = 80;
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
