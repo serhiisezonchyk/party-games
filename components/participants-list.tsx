@@ -7,11 +7,6 @@ import {
   TextInput,
   View,
 } from "react-native";
-import {
-  NestableDraggableFlatList,
-  type RenderItemParams,
-  ScaleDecorator,
-} from "react-native-draggable-flatlist";
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 
 import type { Colors } from "@/constants/theme";
@@ -88,192 +83,153 @@ export function ParticipantsList({
     onChange(nextParticipants);
   }
 
-  const renderItem = ({
-    item,
-    drag,
-    isActive,
-    getIndex,
-  }: RenderItemParams<Participant>) => {
-    const index = getIndex() ?? 0;
+  function renderParticipant(item: Participant, index: number) {
     const isLeader = withLeading && index === 0;
 
     return (
-      <ScaleDecorator>
-        <Swipeable
-          activeOffsetX={[-16, 16]}
-          dragOffsetFromRightEdge={16}
-          failOffsetY={[-8, 8]}
-          friction={2}
-          overshootRight={false}
-          renderRightActions={() => (
-            <Pressable
-              accessibilityLabel={t("participants.delete")}
-              accessibilityRole="button"
-              onPress={() => deleteParticipant(item.id)}
-              style={styles.deleteAction}
-            >
-              <MaterialIcons color="#FFFFFF" name="delete" size={24} />
-            </Pressable>
-          )}
-        >
-          <View
-            style={[
-              styles.row,
-              {
-                backgroundColor: palette.card,
-                borderColor: palette.border,
-                opacity: isActive ? 0.86 : 1,
-              },
-            ]}
+      <Swipeable
+        activeOffsetX={[-16, 16]}
+        dragOffsetFromRightEdge={16}
+        failOffsetY={[-8, 8]}
+        friction={2}
+        key={item.id}
+        overshootRight={false}
+        renderRightActions={() => (
+          <Pressable
+            accessibilityLabel={t("participants.delete")}
+            accessibilityRole="button"
+            onPress={() => deleteParticipant(item.id)}
+            style={styles.deleteAction}
           >
-            <Pressable
-              accessibilityLabel={t("participants.drag")}
-              accessibilityRole="button"
-              onLongPress={isWeb ? undefined : drag}
-              onPressIn={isWeb ? drag : undefined}
-              style={({ pressed }) => [
-                styles.leadIcon,
-                {
-                  backgroundColor: isActive ? palette.surface : "transparent",
-                  opacity: pressed ? 0.72 : 1,
-                },
-              ]}
-            >
-              {isLeader ? (
-                <MaterialIcons
-                  color={palette.tint}
-                  name="emoji-events"
-                  size={22}
-                />
-              ) : (
-                <MaterialIcons
-                  color={palette.mutedText}
-                  name="drag-indicator"
-                  size={22}
-                />
-              )}
-            </Pressable>
+            <MaterialIcons color="#FFFFFF" name="delete" size={24} />
+          </Pressable>
+        )}
+      >
+        <View
+          style={[
+            styles.row,
+            {
+              backgroundColor: palette.card,
+              borderColor: palette.border,
+            },
+          ]}
+        >
+          <View style={styles.leadIcon}>
+            <MaterialIcons
+              color={isLeader ? palette.tint : palette.mutedText}
+              name={isLeader ? "emoji-events" : "person"}
+              size={22}
+            />
+          </View>
 
-            {isWeb ? (
-              <View style={styles.reorderControls}>
-                <Pressable
-                  accessibilityLabel={t("participants.drag")}
-                  accessibilityRole="button"
-                  disabled={index === 0}
-                  onPress={() => moveParticipant(index, -1)}
-                  style={({ pressed }) => [
-                    styles.reorderButton,
-                    {
-                      backgroundColor: palette.surface,
-                      opacity: getReorderButtonOpacity(index === 0, pressed),
-                    },
-                  ]}
-                >
-                  <MaterialIcons
-                    color={palette.mutedText}
-                    name="keyboard-arrow-up"
-                    size={18}
-                  />
-                </Pressable>
-                <Pressable
-                  accessibilityLabel={t("participants.drag")}
-                  accessibilityRole="button"
-                  disabled={index === participants.length - 1}
-                  onPress={() => moveParticipant(index, 1)}
-                  style={({ pressed }) => [
-                    styles.reorderButton,
-                    {
-                      backgroundColor: palette.surface,
-                      opacity: getReorderButtonOpacity(
-                        index === participants.length - 1,
-                        pressed
-                      ),
-                    },
-                  ]}
-                >
-                  <MaterialIcons
-                    color={palette.mutedText}
-                    name="keyboard-arrow-down"
-                    size={18}
-                  />
-                </Pressable>
-              </View>
-            ) : null}
-
-            <View style={styles.rowContent}>
-              <TextInput
-                accessibilityLabel={t("participants.name")}
-                onChangeText={(name) => updateParticipant(item.id, { name })}
-                placeholder={t("participants.namePlaceholder")}
-                placeholderTextColor={palette.mutedText}
-                rejectResponderTermination={false}
-                scrollEnabled={false}
-                style={[
-                  styles.nameInput,
+          {isWeb ? (
+            <View style={styles.reorderControls}>
+              <Pressable
+                accessibilityLabel={t("participants.moveUp")}
+                accessibilityRole="button"
+                disabled={index === 0}
+                onPress={() => moveParticipant(index, -1)}
+                style={({ pressed }) => [
+                  styles.reorderButton,
                   {
-                    color: palette.text,
-                    borderColor: palette.border,
+                    backgroundColor: palette.surface,
+                    opacity: getReorderButtonOpacity(index === 0, pressed),
                   },
                 ]}
-                value={item.name}
-              />
-              <View style={styles.genderRow}>
-                {genderOptions.map((option) => {
-                  const isSelected = item.gender === option.value;
+              >
+                <MaterialIcons
+                  color={palette.mutedText}
+                  name="keyboard-arrow-up"
+                  size={18}
+                />
+              </Pressable>
+              <Pressable
+                accessibilityLabel={t("participants.moveDown")}
+                accessibilityRole="button"
+                disabled={index === participants.length - 1}
+                onPress={() => moveParticipant(index, 1)}
+                style={({ pressed }) => [
+                  styles.reorderButton,
+                  {
+                    backgroundColor: palette.surface,
+                    opacity: getReorderButtonOpacity(
+                      index === participants.length - 1,
+                      pressed
+                    ),
+                  },
+                ]}
+              >
+                <MaterialIcons
+                  color={palette.mutedText}
+                  name="keyboard-arrow-down"
+                  size={18}
+                />
+              </Pressable>
+            </View>
+          ) : null}
 
-                  return (
-                    <Pressable
-                      accessibilityRole="button"
-                      accessibilityState={{ selected: isSelected }}
-                      key={option.value}
-                      onPress={() =>
-                        updateParticipant(item.id, { gender: option.value })
-                      }
-                      style={({ pressed }) => [
-                        styles.genderButton,
-                        {
-                          backgroundColor: isSelected
-                            ? palette.tint
-                            : palette.surface,
-                          opacity: pressed ? 0.72 : 1,
-                        },
+          <View style={styles.rowContent}>
+            <TextInput
+              accessibilityLabel={t("participants.name")}
+              onChangeText={(name) => updateParticipant(item.id, { name })}
+              placeholder={t("participants.namePlaceholder")}
+              placeholderTextColor={palette.mutedText}
+              rejectResponderTermination={false}
+              scrollEnabled={false}
+              style={[
+                styles.nameInput,
+                {
+                  color: palette.text,
+                  borderColor: palette.border,
+                },
+              ]}
+              value={item.name}
+            />
+            <View style={styles.genderRow}>
+              {genderOptions.map((option) => {
+                const isSelected = item.gender === option.value;
+
+                return (
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityState={{ selected: isSelected }}
+                    key={option.value}
+                    onPress={() =>
+                      updateParticipant(item.id, { gender: option.value })
+                    }
+                    style={({ pressed }) => [
+                      styles.genderButton,
+                      {
+                        backgroundColor: isSelected
+                          ? palette.tint
+                          : palette.surface,
+                        opacity: pressed ? 0.72 : 1,
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.genderText,
+                        { color: isSelected ? palette.onTint : palette.text },
                       ]}
                     >
-                      <Text
-                        style={[
-                          styles.genderText,
-                          { color: isSelected ? palette.onTint : palette.text },
-                        ]}
-                      >
-                        {t(option.labelKey)}
-                      </Text>
-                    </Pressable>
-                  );
-                })}
-              </View>
+                      {t(option.labelKey)}
+                    </Text>
+                  </Pressable>
+                );
+              })}
             </View>
           </View>
-        </Swipeable>
-      </ScaleDecorator>
+        </View>
+      </Swipeable>
     );
-  };
+  }
 
   return (
     <View style={styles.container}>
-      <NestableDraggableFlatList
-        activationDistance={isWeb ? 4 : 28}
-        autoscrollSpeed={140}
-        autoscrollThreshold={72}
-        data={participants}
-        dragItemOverflow
-        keyExtractor={(participant) => participant.id}
-        // The library's nested wrapper measures with findNodeHandle, which
-        // warns on RN 0.81/Fabric. The inner list still measures its own size.
-        onContainerLayout={() => undefined}
-        onDragEnd={({ data }) => onChange(data)}
-        renderItem={renderItem}
-        scrollEnabled={false}
-      />
+      {participants.map((participant, index) =>
+        renderParticipant(participant, index)
+      )}
       <Pressable
         accessibilityRole="button"
         onPress={onAdd}

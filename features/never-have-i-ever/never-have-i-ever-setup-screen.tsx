@@ -1,7 +1,6 @@
 import { useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { NestableScrollContainer } from "react-native-draggable-flatlist";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ParticipantsList } from "@/components/participants-list";
 import { ParticleBackground } from "@/components/particle-background";
@@ -182,7 +181,7 @@ export function NeverHaveIEverSetupScreen() {
       style={[styles.screen, { backgroundColor: palette.background }]}
     >
       <ParticleBackground theme={effectiveTheme} />
-      <NestableScrollContainer contentContainerStyle={styles.content}>
+      <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.hero}>
           <Text style={[styles.title, { color: palette.text }]}>
             {t("neverHaveIEver.setup.title")}
@@ -218,7 +217,7 @@ export function NeverHaveIEverSetupScreen() {
             t={t}
           />
         </Section>
-      </NestableScrollContainer>
+      </ScrollView>
 
       <View
         style={[
