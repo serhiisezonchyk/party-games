@@ -5,6 +5,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ParticipantsList } from "@/components/participants-list";
 import { ParticleBackground } from "@/components/particle-background";
+import { SetupFooter } from "@/components/setup-footer";
 import { Colors } from "@/constants/theme";
 import { usePreferences } from "@/contexts/preferences-context";
 import {
@@ -251,7 +252,7 @@ export function MafiaSetupScreen() {
         ) : null}
       </ScrollView>
 
-      <View
+      <SetupFooter
         style={[
           styles.footer,
           { backgroundColor: palette.background, borderColor: palette.border },
@@ -283,7 +284,7 @@ export function MafiaSetupScreen() {
             {t("mafia.start.button")}
           </Text>
         </Pressable>
-      </View>
+      </SetupFooter>
 
       <RestoreCompanyModal
         companies={recentCompanies}

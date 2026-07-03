@@ -4,6 +4,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ParticipantsList } from "@/components/participants-list";
 import { ParticleBackground } from "@/components/particle-background";
+import { SetupFooter } from "@/components/setup-footer";
 import { Colors } from "@/constants/theme";
 import { usePreferences } from "@/contexts/preferences-context";
 import { BrainOnSettingsPanel } from "@/features/brain-on/brain-on-settings-panel";
@@ -215,7 +216,7 @@ export function BrainOnSetupScreen() {
         </Section>
       </ScrollView>
 
-      <View
+      <SetupFooter
         style={[
           styles.footer,
           { backgroundColor: palette.background, borderColor: palette.border },
@@ -245,7 +246,7 @@ export function BrainOnSetupScreen() {
             {t("brainOn.start.button")}
           </Text>
         </Pressable>
-      </View>
+      </SetupFooter>
     </SafeAreaView>
   );
 }

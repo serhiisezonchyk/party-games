@@ -4,6 +4,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ParticipantsList } from "@/components/participants-list";
 import { ParticleBackground } from "@/components/particle-background";
+import { SetupFooter } from "@/components/setup-footer";
 import { Colors } from "@/constants/theme";
 import { usePreferences } from "@/contexts/preferences-context";
 import type { Participant } from "@/features/mafia/types";
@@ -219,7 +220,7 @@ export function NeverHaveIEverSetupScreen() {
         </Section>
       </ScrollView>
 
-      <View
+      <SetupFooter
         style={[
           styles.footer,
           { backgroundColor: palette.background, borderColor: palette.border },
@@ -249,7 +250,7 @@ export function NeverHaveIEverSetupScreen() {
             {t("neverHaveIEver.start.button")}
           </Text>
         </Pressable>
-      </View>
+      </SetupFooter>
     </SafeAreaView>
   );
 }

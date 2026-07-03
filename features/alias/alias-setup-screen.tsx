@@ -5,6 +5,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { ParticleBackground } from "@/components/particle-background";
+import { SetupFooter } from "@/components/setup-footer";
 import { Colors } from "@/constants/theme";
 import { usePreferences } from "@/contexts/preferences-context";
 import { AliasSettingsPanel } from "@/features/alias/alias-settings-panel";
@@ -198,7 +199,7 @@ export function AliasSetupScreen() {
         ) : null}
       </ScrollView>
 
-      <View
+      <SetupFooter
         style={[
           styles.footer,
           { backgroundColor: palette.background, borderColor: palette.border },
@@ -228,7 +229,7 @@ export function AliasSetupScreen() {
             {t("alias.start.button")}
           </Text>
         </Pressable>
-      </View>
+      </SetupFooter>
     </SafeAreaView>
   );
 }
