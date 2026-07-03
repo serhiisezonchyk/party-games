@@ -290,6 +290,8 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "700",
     minHeight: 38,
+    outlineStyle: "solid",
+    outlineWidth: 0,
     paddingVertical: 6,
   },
   genderRow: {
