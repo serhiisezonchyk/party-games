@@ -1,5 +1,12 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import {
   NestableDraggableFlatList,
   type RenderItemParams,
@@ -21,6 +28,16 @@ const genderOptions: readonly GenderOption[] = [
   { value: "female", labelKey: "participants.gender.female" },
   { value: "nonBinary", labelKey: "participants.gender.nonBinary" },
 ];
+
+const isWeb = Platform.OS === "web";
+
+function getReorderButtonOpacity(isDisabled: boolean, isPressed: boolean) {
+  if (isDisabled) {
+    return 0.38;
+  }
+
+  return isPressed ? 0.72 : 1;
+}
 
 interface ParticipantsListProps {
   onAdd: () => void;
@@ -56,6 +73,19 @@ export function ParticipantsList({
     onChange(
       participants.filter((participant) => participant.id !== participantId)
     );
+  }
+
+  function moveParticipant(fromIndex: number, direction: -1 | 1) {
+    const toIndex = fromIndex + direction;
+
+    if (toIndex < 0 || toIndex >= participants.length) {
+      return;
+    }
+
+    const nextParticipants = [...participants];
+    const [participant] = nextParticipants.splice(fromIndex, 1);
+    nextParticipants.splice(toIndex, 0, participant);
+    onChange(nextParticipants);
   }
 
   const renderItem = ({
@@ -99,7 +129,8 @@ export function ParticipantsList({
             <Pressable
               accessibilityLabel={t("participants.drag")}
               accessibilityRole="button"
-              onLongPress={drag}
+              onLongPress={isWeb ? undefined : drag}
+              onPressIn={isWeb ? drag : undefined}
               style={({ pressed }) => [
                 styles.leadIcon,
                 {
@@ -122,6 +153,52 @@ export function ParticipantsList({
                 />
               )}
             </Pressable>
+
+            {isWeb ? (
+              <View style={styles.reorderControls}>
+                <Pressable
+                  accessibilityLabel={t("participants.drag")}
+                  accessibilityRole="button"
+                  disabled={index === 0}
+                  onPress={() => moveParticipant(index, -1)}
+                  style={({ pressed }) => [
+                    styles.reorderButton,
+                    {
+                      backgroundColor: palette.surface,
+                      opacity: getReorderButtonOpacity(index === 0, pressed),
+                    },
+                  ]}
+                >
+                  <MaterialIcons
+                    color={palette.mutedText}
+                    name="keyboard-arrow-up"
+                    size={18}
+                  />
+                </Pressable>
+                <Pressable
+                  accessibilityLabel={t("participants.drag")}
+                  accessibilityRole="button"
+                  disabled={index === participants.length - 1}
+                  onPress={() => moveParticipant(index, 1)}
+                  style={({ pressed }) => [
+                    styles.reorderButton,
+                    {
+                      backgroundColor: palette.surface,
+                      opacity: getReorderButtonOpacity(
+                        index === participants.length - 1,
+                        pressed
+                      ),
+                    },
+                  ]}
+                >
+                  <MaterialIcons
+                    color={palette.mutedText}
+                    name="keyboard-arrow-down"
+                    size={18}
+                  />
+                </Pressable>
+              </View>
+            ) : null}
 
             <View style={styles.rowContent}>
               <TextInput
@@ -184,7 +261,7 @@ export function ParticipantsList({
   return (
     <View style={styles.container}>
       <NestableDraggableFlatList
-        activationDistance={28}
+        activationDistance={isWeb ? 4 : 28}
         autoscrollSpeed={140}
         autoscrollThreshold={72}
         data={participants}
@@ -237,6 +314,16 @@ const styles = StyleSheet.create({
     height: 44,
     justifyContent: "center",
     width: 28,
+  },
+  reorderControls: {
+    gap: 4,
+  },
+  reorderButton: {
+    alignItems: "center",
+    borderRadius: 10,
+    height: 26,
+    justifyContent: "center",
+    width: 30,
   },
   rowContent: {
     flex: 1,

@@ -8,6 +8,7 @@ import { Stack } from "expo-router";
 import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
+import { Platform, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import "../global.css";
@@ -15,6 +16,7 @@ import "../global.css";
 import { HeaderSettingsButton } from "@/components/header-settings-button";
 import { PreferencesModal } from "@/components/preferences-modal";
 import { TelegramMiniAppBridge } from "@/components/telegram-mini-app-bridge";
+import { WEB_APP_MAX_WIDTH } from "@/constants/layout";
 import { Colors } from "@/constants/theme";
 import {
   PreferencesProvider,
@@ -66,27 +68,47 @@ function RootNavigator() {
         },
       }}
     >
-      <Stack
-        screenOptions={{
-          contentStyle: { backgroundColor: palette.background },
-          headerRight: () => <HeaderSettingsButton />,
-          headerShadowVisible: false,
-          headerStyle: { backgroundColor: palette.background },
-          headerTintColor: palette.text,
-          headerTitleStyle: {
-            fontWeight: "700",
-          },
-        }}
-      >
-        <Stack.Screen name="index" options={{ title: t("app.name") }} />
-        <Stack.Screen
-          name="games/[gameId]"
-          options={{ title: t("home.openGame") }}
-        />
-      </Stack>
+      <View style={[styles.appRoot, { backgroundColor: palette.background }]}>
+        <View style={styles.appShell}>
+          <Stack
+            screenOptions={{
+              contentStyle: { backgroundColor: palette.background },
+              headerRight: () => <HeaderSettingsButton />,
+              headerShadowVisible: false,
+              headerStyle: { backgroundColor: palette.background },
+              headerTintColor: palette.text,
+              headerTitleStyle: {
+                fontWeight: "700",
+              },
+            }}
+          >
+            <Stack.Screen name="index" options={{ title: t("app.name") }} />
+            <Stack.Screen
+              name="games/[gameId]"
+              options={{ title: t("home.openGame") }}
+            />
+          </Stack>
+        </View>
+      </View>
       <StatusBar style={effectiveTheme === "dark" ? "light" : "dark"} />
       <TelegramMiniAppBridge />
       <PreferencesModal />
     </ThemeProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  appRoot: {
+    flex: 1,
+  },
+  appShell: {
+    flex: 1,
+    ...(Platform.OS === "web"
+      ? {
+          alignSelf: "center",
+          maxWidth: WEB_APP_MAX_WIDTH,
+          width: "100%",
+        }
+      : null),
+  },
+});

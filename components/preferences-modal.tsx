@@ -1,7 +1,4 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import DateTimePicker, {
-  type DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
 import { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -15,9 +12,11 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { WEB_APP_MAX_WIDTH } from "@/constants/layout";
 import { Colors } from "@/constants/theme";
 import { usePreferences } from "@/contexts/preferences-context";
 import type { LanguageMode, ThemeMode } from "@/storage/preferences-storage";
+import { DateOfBirthPicker } from "./date-of-birth-picker";
 
 function formatDateOnly(date: Date) {
   const year = date.getFullYear();
@@ -174,18 +173,6 @@ export function PreferencesModal() {
     outputRange: [420, 0],
   });
 
-  function handleDateChange(event: DateTimePickerEvent, selectedDate?: Date) {
-    if (Platform.OS === "android") {
-      setIsDatePickerVisible(false);
-    }
-
-    if (event.type === "dismissed" || !selectedDate) {
-      return;
-    }
-
-    setDateOfBirthIso(formatDateOnly(selectedDate));
-  }
-
   if (!isRendered) {
     return null;
   }
@@ -316,13 +303,25 @@ export function PreferencesModal() {
                 ) : null}
               </View>
               {isDatePickerVisible ? (
-                <DateTimePicker
-                  display={Platform.OS === "ios" ? "spinner" : "default"}
-                  maximumDate={new Date()}
-                  mode="date"
-                  onChange={handleDateChange}
-                  value={datePickerValue}
-                />
+                <View
+                  style={[
+                    styles.datePickerContainer,
+                    {
+                      backgroundColor: palette.surface,
+                      borderColor: palette.border,
+                    },
+                  ]}
+                >
+                  <DateOfBirthPicker
+                    backgroundColor={palette.surface}
+                    borderColor={palette.border}
+                    maximumDate={new Date()}
+                    onChange={(date) => setDateOfBirthIso(formatDateOnly(date))}
+                    onDismiss={() => setIsDatePickerVisible(false)}
+                    textColor={palette.text}
+                    value={datePickerValue}
+                  />
+                </View>
               ) : null}
             </View>
           </Pressable>
@@ -342,6 +341,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.34)",
   },
   sheetContainer: {
+    alignItems: "center",
     width: "100%",
   },
   sheet: {
@@ -349,7 +349,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
     borderTopWidth: 1,
     gap: 24,
+    maxWidth: Platform.OS === "web" ? WEB_APP_MAX_WIDTH : undefined,
     padding: 24,
+    width: "100%",
   },
   header: {
     alignItems: "flex-start",
@@ -414,6 +416,11 @@ const styles = StyleSheet.create({
     height: 42,
     justifyContent: "center",
     width: 42,
+  },
+  datePickerContainer: {
+    borderRadius: 14,
+    borderWidth: 1,
+    overflow: "hidden",
   },
   segmentGroup: {
     borderRadius: 14,
